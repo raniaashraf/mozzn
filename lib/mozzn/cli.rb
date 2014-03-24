@@ -8,7 +8,7 @@ module Mozzn
     
     trap(:INT) { exit 1 }
     
-    default_task :help
+    # default_task :help
 
     desc 'login', 'User signin mozzn using email and password'
     # mozzn login 
