@@ -10,12 +10,12 @@ module Mozzn
     end
 
     def get path , parms
-      response = @connection.get "#{path.to_s}.json", parms
+      response = @connection.get "#{path.to_s}", parms
       JSON.parse(response.body)
     end
 
     def post path , parms
-      response = @connection.post "#{path.to_s}.json", parms
+      response = @connection.post "#{path.to_s}", parms
       JSON.parse(response.body)
     end
   end
