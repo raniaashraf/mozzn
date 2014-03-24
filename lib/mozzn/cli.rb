@@ -26,7 +26,6 @@ module Mozzn
       response = mozzn.post(:sessions, params)
       auth_token = response['data']['auth_token'].inspect
       Mozzn.config.add('token', auth_token)
-      puts Mozzn.config.read
     end
     
   end  
