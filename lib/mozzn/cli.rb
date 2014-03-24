@@ -28,6 +28,26 @@ module Mozzn
       Mozzn.config.add('token', auth_token)
     end
 
+    desc 'add_key', 'User adds his ssh public key'
+    # mozzn login
+    def add_key
+      mozzn = Mozzn::Api.new
+      hl = HighLine.new
+      auth_token = Mozzn.config.read['token'].to_s
+      puts auth_token
+      path = "keys\?auth_token\="+ auth_token.to_s
+      puts path
+      # public_key = hl.ask 'Public Key: '
+      # params = {
+      #   key: {
+      #     public: public_key
+      #   }
+      # }
+      # response = mozzn.post(path, params)
+      # puts response.inspect
+      
+    end
+
 
     
   end  
