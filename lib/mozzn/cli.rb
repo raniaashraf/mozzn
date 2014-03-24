@@ -10,13 +10,13 @@ module Mozzn
     
     default_task :help
 
-    desc 'login', 'User signin chimera using email and password'
+    desc 'login', 'User signin mozzn using email and password'
     # mozzn login 
     def login 
-      mozzn = Mozzn::Chimera.new
+      mozzn = Mozzn::Api.new
       hl = HighLine.new
-      email = hl.ask 'Chimera email: '
-      password = hl.ask('Chimera password (we will not store this): ') { |q| q.echo = "*" }
+      email = hl.ask 'Mozzn email: '
+      password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
       params = {
         user: {
           email: email,
@@ -27,6 +27,8 @@ module Mozzn
       auth_token = response['data']['auth_token'].inspect
       Mozzn.config.add('token', auth_token)
     end
+
+
     
   end  
 end

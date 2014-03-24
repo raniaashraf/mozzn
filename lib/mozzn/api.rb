@@ -2,7 +2,7 @@ require 'faraday'
 require 'json'
 
 module Mozzn
-  class Chimera
+  class Api
     attr_accessor :connection
     
     def initialize 

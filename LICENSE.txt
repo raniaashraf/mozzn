@@ -1,4 +1,4 @@
-Copyright (c) 2014 raniaashraf
+Copyright (c) 2014 Mozzn
 
 MIT License
 

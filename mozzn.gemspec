@@ -6,11 +6,11 @@ require 'mozzn/version'
 Gem::Specification.new do |spec|
   spec.name          = "mozzn"
   spec.version       = Mozzn::VERSION
-  spec.authors       = ["raniaashraf"]
-  spec.email         = ["rania@overcstudios.com"]
+  spec.authors       = ["mozzn"]
+  spec.email         = ["info@mozzn.com"]
   spec.summary       = %q{Command Line Interface to mozzn.}
   spec.description   = %q{Command Line Interface to mozzn}
-  spec.homepage      = ""
+  spec.homepage      = "http://mozzn.com"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")

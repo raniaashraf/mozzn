@@ -1,6 +1,6 @@
 require "mozzn/version"
 require 'mozzn/config'
-require 'mozzn/chimera'
+require 'mozzn/api'
 require 'mozzn/cli'
 
 
@@ -11,7 +11,7 @@ module Mozzn
       # Now load the congiuration
       @config = Mozzn::Config.new
 
-      @chimera = Mozzn::Chimera.new
+      @chimera = Mozzn::Api.new
 
       # Invoke our CLI
       Mozzn::CLI.start
