@@ -94,16 +94,14 @@ module Mozzn
 
     desc 'git_check', 'checks if user has git installed in $PATH or not'
     def git_check
-      # line = Cocaine::CommandLine.new("which git")
-      # begin
-      #   output = line.run
-      # rescue Cocaine::ExitStatusError => e
-      #   output = 'Unable to find git it is either not installed or not in your $PATH.' 
-      #   say output, :red
-      #   return false
-      # end
-      system('which gitxx')
-      ?.exitstatus
+      line = Cocaine::CommandLine.new("which git")
+      begin
+        output = line.run
+      rescue Cocaine::ExitStatusError => e
+        output = 'Unable to find git it is either not installed or not in your $PATH.' 
+        say output, :red
+        return false
+      end
     end
 
     desc 'ssh_key_check', 'checks if user has ssh key in ~/.ssh path'
