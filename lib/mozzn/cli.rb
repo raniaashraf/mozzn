@@ -39,7 +39,6 @@ module Mozzn
     end
 
     desc 'add_key', 'User adds his ssh public key'
-
     # mozzn add_key
     def add_key
       mozzn = Mozzn::Api.new
@@ -55,8 +54,6 @@ module Mozzn
       response = mozzn.post(path, params)
       say response['info'], :green
     end
-
-   
 
     desc 'create_app', 'User create a new application'
     # mozzn create_app
