@@ -55,6 +55,7 @@ module Mozzn
       say response['info'], :green
     end
 
+
     desc 'create_app', 'User create a new application'
     # mozzn create_app
     def create_app
