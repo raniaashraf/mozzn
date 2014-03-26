@@ -13,7 +13,7 @@ module Mozzn
     
     default_task :help
 
-    desc 'login', 'Log in with your mozzn credentials'
+    desc 'login', 'Login with your mozzn credentials'
     # mozzn login 
     def login 
       mozzn = Mozzn::Api.new
