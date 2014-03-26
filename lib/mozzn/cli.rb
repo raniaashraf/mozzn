@@ -13,7 +13,7 @@ module Mozzn
     
     default_task :help
 
-    desc 'login', 'Log in with your mozzn credentials'
+    desc 'login', 'Login with your mozzn credentials'
     # mozzn login 
     def login 
       mozzn = Mozzn::Api.new
@@ -40,11 +40,28 @@ module Mozzn
 
     desc 'add_key PUBLIC_KEY', 'add your ssh public key'
     # mozzn add_key
-    def add_key public_key = nil
+    def add_key public_key = nil, key_path = nil
       mozzn = Mozzn::Api.new
-      if public_key == nil
+      if key_path == nil && public_key == nil
         hl = HighLine.new
-        public_key = hl.ask 'Public Key: '
+        key_path = hl.ask 'SSH key path: '
+        full_path = File.expand_path(key_path)
+        if File.exist?(full_path)
+          File.open(full_path, "rb") do |f|
+            public_key = f.read
+          end
+        else
+          say 'File does not exist!', :red
+          return
+        end
+      elsif public_key == nil
+        if File.exist?(File.expand_path(key_path))
+          file = File.open(key_path, "rb")
+          public_key = file.read
+        else
+          say 'File does not exist!', :red
+          return
+        end   
       end
       auth_token = Mozzn.config.read['token']
       path = "keys\?auth_token\=#{auth_token}"
