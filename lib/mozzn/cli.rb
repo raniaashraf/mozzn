@@ -126,7 +126,7 @@ module Mozzn
         }
       }
       path = 'applications'
-      response = mozzn.delete(path, params)
+      response = mozzn.get(path, params)
       say response['info'], :green
     end
 

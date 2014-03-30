@@ -21,11 +21,6 @@ module Mozzn
       JSON.parse(response.body)
     end
 
-    def delete path, params
-      response = @connection.delete uri(path), parms
-      JSON.parse(response.body)
-    end
-
     private
     def uri path
       uri = []
