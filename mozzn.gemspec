@@ -24,5 +24,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday"
   spec.add_dependency "cocaine"
   spec.add_dependency "git"
+  spec.add_dependency "rspec"
   
 end
