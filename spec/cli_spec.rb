@@ -1,5 +1,5 @@
 require 'spec_helper'
-require "cli"
+require 'mozzn/cli'
 describe Cli do
   pending "write it"
 end
