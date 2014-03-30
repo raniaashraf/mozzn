@@ -120,6 +120,11 @@ module Mozzn
         hl = HighLine.new
         name = hl.ask 'Application name: '
       end
+      params = {
+        application: {
+          name: name
+        }
+      }
       path = 'applications'
       response = mozzn.delete(path, params)
       say response['info'], :green
