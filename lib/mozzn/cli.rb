@@ -40,25 +40,28 @@ module Mozzn
     end
 
     desc 'add_key PUBLIC_KEY', 'add your ssh public key'
+    method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
+    method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
-    def add_key public_key = nil, key_path = nil
+    def add_key
       mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
-      if key_path.present?
-        key_path = File.expand_path(key_path)
-      elsif public_key.present?
+      if options[:key_path].present?
+        options[:key_path] = File.expand_path(options[:key_path])
+      elsif options[:public_key].present?
         # Do nothing
+        public_key = options[:public_key]
       else
         hl = HighLine.new
         key_path = hl.ask 'SSH key path: '
-        key_path = File.expand_path(key_path)
+        key_path = File.expand_path(options[:key_path])
       end
 
-      if public_key.nil? && File.exist?(key_path)
-        File.open(key_path, "rb") do |f|
-          public_key = f.read
+      if options[:public_key].nil? && File.exist?(options[:key_path])
+        File.open(options[:key_path], "rb") do |f|
+          options[:public_key] = f.read
         end
       else
-        say "Unable to read #{key_path}, file does not exist or not accessible!", :red
+        say "Unable to read #{options[:key_path]}, file does not exist or not accessible!", :red
         return
       end
 
