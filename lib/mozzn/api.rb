@@ -26,7 +26,6 @@ module Mozzn
       uri = []
       uri << path.to_s
       uri << "auth_token=#{@token}" unless @token.nil?
-      puts "Requesting #{uri.join('?')}"
       uri.join('?')
     end
   end

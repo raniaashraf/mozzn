@@ -64,6 +64,7 @@ module Mozzn
           return
         end   
       end
+      path = 'keys'
       params = {
         key: {
           public: public_key
