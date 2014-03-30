@@ -46,22 +46,22 @@ module Mozzn
     def add_key
       mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
       if options[:key_path].present?
-        options[:key_path] = File.expand_path(options[:key_path])
+        key_path = File.expand_path(options[:key_path])
       elsif options[:public_key].present?
         # Do nothing
         public_key = options[:public_key]
       else
         hl = HighLine.new
         key_path = hl.ask 'SSH key path: '
-        key_path = File.expand_path(options[:key_path])
+        key_path = File.expand_path(key_path)
       end
 
-      if options[:public_key].nil? && File.exist?(options[:key_path])
-        File.open(options[:key_path], "rb") do |f|
-          options[:public_key] = f.read
+      if public_key.nil? && File.exist?(key_path)
+        File.open(key_path, "rb") do |f|
+          public_key = f.read
         end
       else
-        say "Unable to read #{options[:key_path]}, file does not exist or not accessible!", :red
+        say "Unable to read #{key_path}, file does not exist or not accessible!", :red
         return
       end
 
