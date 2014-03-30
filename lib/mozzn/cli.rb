@@ -121,9 +121,7 @@ module Mozzn
         name = hl.ask 'Application name: '
       end
       params = {
-        application: {
-          name: name
-        }
+        name: name
       }
       path = 'applications'
       response = mozzn.get(path, params)
