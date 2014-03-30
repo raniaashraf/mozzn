@@ -55,7 +55,7 @@ module Mozzn
         key_path = File.expand_path(key_path)
       end
 
-      if public_key.nil? && File.exist?(key_path)
+      if key_path.present? && File.exist?(key_path)
         File.open(key_path, "rb") do |f|
           public_key = f.read
         end
