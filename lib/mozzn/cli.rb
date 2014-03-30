@@ -45,6 +45,7 @@ module Mozzn
     # mozzn add_key
     def add_key
       mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      puts options
       if options[:key_path].present?
         key_path = File.expand_path(options[:key_path])
       elsif options[:public_key].present?
