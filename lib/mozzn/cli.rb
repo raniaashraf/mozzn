@@ -81,8 +81,7 @@ module Mozzn
         hl = HighLine.new
         name = hl.ask 'Application name: '
       end
-      auth_token = Mozzn.config.read['token']
-      path = "applications\?auth_token\=#{auth_token}"
+      path = 'applications'
       params = {
         application: {
           name: name
