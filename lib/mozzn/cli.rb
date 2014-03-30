@@ -4,6 +4,7 @@ require 'highline'
 require 'cocaine'
 require 'rubygems'
 require 'git'
+require 'mozzn/version'
 
 module Mozzn
   class CLI < Thor
@@ -41,7 +42,7 @@ module Mozzn
     desc 'add_key PUBLIC_KEY', 'add your ssh public key'
     # mozzn add_key
     def add_key public_key = nil, key_path = nil
-      mozzn = Mozzn::Api.new
+      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
       if key_path == nil && public_key == nil
         hl = HighLine.new
         key_path = hl.ask 'SSH key path: '
@@ -54,7 +55,7 @@ module Mozzn
           say 'File does not exist!', :red
           return
         end
-      elsif public_key == nil
+      elsif public_key.nil?
         if File.exist?(File.expand_path(key_path))
           file = File.open(key_path, "rb")
           public_key = file.read
@@ -63,8 +64,6 @@ module Mozzn
           return
         end   
       end
-      auth_token = Mozzn.config.read['token']
-      path = "keys\?auth_token\=#{auth_token}"
       params = {
         key: {
           public: public_key
@@ -77,7 +76,7 @@ module Mozzn
     desc 'create_app APPNAME', 'create a new application'
     # mozzn create_app
     def create_app name = nil
-      mozzn = Mozzn::Api.new
+      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
       if name == nil
         hl = HighLine.new
         name = hl.ask 'Application name: '
@@ -114,7 +113,7 @@ module Mozzn
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
       puts 'Primary help topics, type "mozzn help COMMAND" for more details:'
-      puts 'Version: 0.0.1'
+      puts "Version: #{Mozzn::VERSION}"
       super command
     end
 
@@ -137,7 +136,7 @@ module Mozzn
         unless ssh.map { |ssh| File.exist?(File.expand_path(ssh))} 
           say "Unable to find an SSH key in #{File.expand_path('~/.ssh/')}. ", :red
         end
-      end      
+      end
     end
   end  
 end
