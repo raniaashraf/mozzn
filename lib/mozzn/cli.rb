@@ -56,15 +56,17 @@ module Mozzn
         key_path = File.expand_path(key_path)
       end
 
-      puts "Key path: #{public_key.inspect}"
-      if public_key.nil? && File.exist?(key_path)
-        File.open(key_path, "rb") do |f|
-          public_key = f.read
+      if public_key.nil?
+        if File.exist?(key_path)
+          File.open(key_path, "rb") do |f|
+            public_key = f.read
+          end
+        else
+          say "Unable to read #{key_path}, file does not exist or not accessible!", :red
+          return
         end
-      else
-        say "Unable to read #{key_path}, file does not exist or not accessible!", :red
-        return
       end
+      puts "Public key: #{public_key.inspect}"
 
       path = 'keys'
       params = {
