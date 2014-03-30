@@ -112,6 +112,19 @@ module Mozzn
       end
     end
 
+    desc 'remove_app APPNAME', 'Remove spcicfic Application.'
+
+    def remove_app name = nil
+      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      if name == nil
+        hl = HighLine.new
+        name = hl.ask 'Application name: '
+      end
+      path = 'applications'
+      response = mozzn.delete(path, params)
+      say response['info'], :green
+    end
+
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
       puts 'Primary help topics, type "mozzn help COMMAND" for more details:'
