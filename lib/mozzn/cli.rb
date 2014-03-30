@@ -124,8 +124,14 @@ module Mozzn
         name: name
       }
       path = 'applications'
+      begin
       response = mozzn.get(path, params)
-      say response['info'], :green
+        say response['info'], :green   
+      rescue JSON::ParserError => e
+        say "You do not have an application with name #{params['name']} "
+        return false 
+      end
+      
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
