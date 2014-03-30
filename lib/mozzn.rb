@@ -1,3 +1,4 @@
+require "mozzn/extnsions"
 require "mozzn/version"
 require 'mozzn/config'
 require 'mozzn/api'
