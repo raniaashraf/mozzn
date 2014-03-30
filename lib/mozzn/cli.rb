@@ -39,7 +39,7 @@ module Mozzn
       end
     end
 
-    desc 'add_key PUBLIC_KEY', 'add your ssh public key'
+    desc 'add_key', 'Add your SSH Public Key'
     method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
@@ -48,7 +48,6 @@ module Mozzn
       if options[:key_path].present?
         key_path = File.expand_path(options[:key_path])
       elsif options[:public_key].present?
-        # Do nothing
         public_key = options[:public_key]
       else
         hl = HighLine.new
