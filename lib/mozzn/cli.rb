@@ -128,7 +128,7 @@ module Mozzn
       response = mozzn.get(path, params)
         say response['info'], :green   
       rescue JSON::ParserError => e
-        say "You do not have an application with name #{params['name']} "
+        say "You do not have an application with name #{params[:name]} ", :red
         return false 
       end
       
