@@ -1,9 +1,9 @@
 require 'bundler/setup'
-Bundler.setup
-
 require 'rspec' 
+
+Bundler.setup
 
 RSpec.configure do |config|
 	config.color_enabled = true
-  config.order = 'rand'
+  config.order = 'random'
 end
