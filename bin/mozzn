@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-debug = true
-
 require 'mozzn'
 
 # Start our command line interface
-Mozzn.start(debug)
+Mozzn.start
