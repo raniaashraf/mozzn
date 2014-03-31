@@ -7,7 +7,7 @@ require 'git'
 require 'mozzn/version'
 
 module Mozzn
-  class CLI < Thor
+  class Cli < Thor
     include Thor::Actions
     
     trap(:INT) { exit 1 }
@@ -44,7 +44,7 @@ module Mozzn
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
     def add_key
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if options[:key_path].present?
         key_path = File.expand_path(options[:key_path])
       elsif options[:public_key].present?
@@ -79,7 +79,7 @@ module Mozzn
     desc 'create_app APPNAME', 'create a new application'
     # mozzn create_app
     def create_app name = nil
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
         hl = HighLine.new
         name = hl.ask 'Application name: '
@@ -115,7 +115,7 @@ module Mozzn
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
 
     def remove_app name = nil
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
         hl = HighLine.new
         name = hl.ask 'Application name: '
