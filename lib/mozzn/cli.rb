@@ -1,4 +1,4 @@
-require 'thor'
+# require 'thor'
 require 'terminal-table'
 require 'highline'
 require 'cocaine'
