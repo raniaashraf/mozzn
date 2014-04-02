@@ -80,7 +80,7 @@ module Mozzn
     def create_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
-        name = ask 'Application name: '
+        say 'You must enter Application Name! ', :red
       end
       path = 'applications'
       params = {
