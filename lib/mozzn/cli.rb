@@ -115,8 +115,7 @@ module Mozzn
     def remove_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
-        hl = HighLine.new
-        name = hl.ask 'Application name: '
+        say "You must enter Application Name!", :red
       end
       params = {
         name: name
