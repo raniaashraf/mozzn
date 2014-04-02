@@ -5,7 +5,6 @@ require 'cocaine'
 require 'rubygems'
 require 'git'
 require 'mozzn/version'
-require 'stringio'
 
 module Mozzn
   class Cli < Thor
@@ -17,23 +16,10 @@ module Mozzn
 
     desc 'login', 'Login with your mozzn credentials'
     # mozzn login 
-    def login testing=false
+    def login 
       mozzn = Mozzn::Api.new
-      if testing
-        @input = StringIO.new
-        @output = StringIO.new
-      end
-      hl = testing ? (HighLine.new @input, @output) : HighLine.new
-      if testing
-        @input << 'rania@overcstudios.com'
-        @input.rewind
-      end
-      email = hl.ask('Mozzn email: ')
-      if testing
-        @input.truncate(@input.rewind)
-        @input << '12345678'
-        @input.rewind
-      end
+      hl = HighLine.new
+      email = hl.ask 'Mozzn email: '
       password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
       params = {
         user: {
@@ -46,7 +32,7 @@ module Mozzn
       if auth_token == nil
         say response['info'], :red
       else
-        Mozzn::Config.new.add('token', auth_token) 
+        Mozzn.config.add('token', auth_token) 
         say response['info'], :green 
         git_check
         ssh_key_check

@@ -53,14 +53,14 @@ describe Mozzn::Cli do
       it "returns Application created successfuly", focused: true do
         # input    = StringIO.new
 		    # output   = StringIO.new
-		    output =  @cli.login true
+		    # output =  @cli.login true
 		    # terminal = HighLine.new
 		    # name = "AppName"
 		    # input << name << "\n"
 	    	# i=terminal.ask("What is your name?  ") { |q| q.default = "none" }
 	    	# puts "i = #{i}"
 	    	# input.rewind
-      	# pending
+      	pending
       end
     end
 
