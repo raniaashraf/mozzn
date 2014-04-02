@@ -81,6 +81,7 @@ module Mozzn
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
         say 'You must enter Application Name! ', :red
+        return
       end
       path = 'applications'
       params = {
@@ -116,6 +117,7 @@ module Mozzn
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
         say "You must enter Application Name!", :red
+        return
       end
       params = {
         name: name
