@@ -81,8 +81,7 @@ module Mozzn
     def create_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
-        hl = HighLine.new
-        name = hl.ask 'Application name: '
+        name = ask 'Application name: '
       end
       path = 'applications'
       params = {
