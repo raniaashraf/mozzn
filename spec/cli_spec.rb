@@ -49,26 +49,6 @@ describe Mozzn::Cli do
       end
     end
 
-    describe "with valid params in interactive shell" do
-      it "returns Application created successfuly", focused: true do
-        # input    = StringIO.new
-		    # output   = StringIO.new
-		    # output =  @cli.login true
-		    # terminal = HighLine.new
-		    # name = "AppName"
-		    # input << name << "\n"
-	    	# i=terminal.ask("What is your name?  ") { |q| q.default = "none" }
-	    	# puts "i = #{i}"
-	    	# input.rewind
-      	pending
-      end
-    end
-
-    describe "with invalid params in interactive shell" do
-      it "returns creating faild" do
-      	pending
-      end
-    end
   end
 
   describe "mozzn add_key" do 
@@ -103,19 +83,6 @@ describe Mozzn::Cli do
 	  		expect(output).to match('Unable to read /invalid_path, file does not exist or not accessible!')
 	  	end
 	  end
-
-	  describe "with valid SSH key path using interactive shell" do
-	  	it "returns SSH key created" do
-	  	pending	
-	  	end
-	  end
-
-	  describe "with invalid SSH key path using interactive shell" do
-	  	it "Unable to read /invalid_path, file does not exist or not accessible!" do
-	  	pending	
-	  	end
-	  end
-
   end
 
   describe "mozzn login" do
