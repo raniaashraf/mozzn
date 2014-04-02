@@ -23,7 +23,7 @@ module Mozzn
         @input = StringIO.new
         @output = StringIO.new
       end
-      hl = testing ? HighLine.new @input, @output : HighLine.new
+      hl = testing ? (HighLine.new @input, @output) : HighLine.new
       if testing
         @input << 'rania@overcstudios.com'
         @input.rewind
