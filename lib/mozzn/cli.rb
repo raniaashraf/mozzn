@@ -20,7 +20,7 @@ module Mozzn
     def login testing=false
       mozzn = Mozzn::Api.new
 
-      @input = StringIO.new('')
+      @input = StringIO.new('ASD')
       @output = StringIO.new
       hl = HighLine.new @input, @output
       if testing
