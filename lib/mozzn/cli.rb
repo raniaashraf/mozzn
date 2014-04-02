@@ -19,10 +19,11 @@ module Mozzn
     # mozzn login 
     def login testing=false
       mozzn = Mozzn::Api.new
-
-      @input = StringIO.new('ASD')
-      @output = StringIO.new
-      hl = HighLine.new @input, @output
+      if testing
+        @input = StringIO.new
+        @output = StringIO.new
+      end
+      hl = testing ? HighLine.new @input, @output : HighLine.new
       if testing
         @input << 'rania@overcstudios.com'
         @input.rewind
