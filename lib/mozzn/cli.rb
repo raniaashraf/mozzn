@@ -50,9 +50,8 @@ module Mozzn
       elsif options[:public_key].present?
         public_key = options[:public_key]
       else
-        hl = HighLine.new
-        key_path = hl.ask 'SSH key path: '
-        key_path = File.expand_path(key_path)
+        say "You must enter an SSH key path or a public SSH key! " , :red
+        return
       end
 
       if public_key.nil?
