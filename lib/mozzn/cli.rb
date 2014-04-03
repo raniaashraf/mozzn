@@ -27,6 +27,8 @@ module Mozzn
       else
         emial = options[:email]
         password = options[:password]
+        puts email
+        puts password
       end
       params = {
         user: {
