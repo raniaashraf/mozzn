@@ -38,17 +38,26 @@ describe Mozzn::Cli do
     describe "with valid params" do
       it "returns Application created successfuly" do
       	output = capture(:stdout) { @cli.create_app "#{unique_name}"}
-      	expect(output).to match('Application created successfuly\nYou already have this remote.\n') 
+      	one,two = output.split("\n")
+      	expect(one).to match('Application created successfuly') 
       end
     end
 
     describe "with invalid params" do
       it "returns creating faild " do
       	output = capture(:stdout) { @cli.create_app "App name"}
-      	expect(output).to match('creating faild\nYou already have this remote.\n')  
+      	one,two = output.split("\n")
+      	expect(one).to match('creating faild')  
       end
     end
 
+    describe "without params " do
+  		it "returns You must enter Application Name! " do
+	  		output = capture(:stdout) { @cli.create_app }
+	  		output.chomp!
+	  		expect(output).to match("You must enter Application Name! ")
+			end
+		end
   end
 
   describe "mozzn add_key" do 
@@ -83,25 +92,81 @@ describe Mozzn::Cli do
 	  		expect(output).to match('Unable to read /invalid_path, file does not exist or not accessible!')
 	  	end
 	  end
+
+	  describe "without params " do
+  		it "returns You must enter an SSH key path or a public SSH key! " do
+	  		output = capture(:stdout) { @cli.add_key }
+	  		output.chomp!
+	  		expect(output).to match("You must enter an SSH key path or a public SSH key! ")
+			end
+		end
   end
 
   describe "mozzn login" do
-  	describe "with valid params in interactive shell" do
-  		it "returns logged in", focused: true do
+  	describe "with valid params " do
+  		it "returns logged in" do
   			@cli.options = {
   											email: 'rania@overcstudios.com',
   											password: '12345678'
   										}
 	  		output = capture(:stdout) { @cli.login }
-	  		expect(output).to match('logged in')
+	  		output.chomp!
+	  		expect(output).to match("Logged in")
 			end
 		end
 
-		describe "with invalid params in interactive shell" do
+		describe "with invalid params " do
   		it "returns Error with your email or password" do
-  			pending
+  			@cli.options = {
+  											email: 'invalid@example.com',
+  											password: '12345678'
+  										}
+	  		output = capture(:stdout) { @cli.login }
+	  		output.chomp!
+	  		expect(output).to match("Error with your email or password")
 			end
 		end
+
+		describe "with nil params " do
+  		it "returns Error with your email or password" do
+  			@cli.options = {
+  											email: '',
+  											password: ''
+  										}
+	  		output = capture(:stdout) { @cli.login }
+	  		output.chomp!
+	  		expect(output).to match("Error with your email or password")
+			end
+		end
+
+		describe "without email " do
+  		it "returns Email and password must be provided! " do
+  			@cli.options = {
+  											password: '12345678'
+  										}
+	  		output = capture(:stdout) { @cli.login }
+	  		output.chomp!
+	  		expect(output).to match("Email and password must be provided! ")
+			end
+		end
+
+		describe "without password " do
+  		it "returns Email and password must be provided! " do
+  			@cli.options = {
+  											email: 'rania@overcstudios.com'
+  										}
+	  		output = capture(:stdout) { @cli.login }
+	  		output.chomp!
+	  		expect(output).to match("Email and password must be provided! ")
+			end
+		end
+
+		describe "with no params " do
+  		it "returns an interactive shell asking for email and password" do
+	  		pending
+			end
+		end
+
   end
 
 

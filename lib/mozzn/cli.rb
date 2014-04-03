@@ -24,11 +24,12 @@ module Mozzn
         hl = HighLine.new
         email = hl.ask 'Mozzn email: '
         password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
+      elsif options[:email].nil? || options[:password].nil?
+        say 'Email and password must be provided! ', :red
+        return
       else
         email = options[:email]
         password = options[:password]
-        puts email
-        puts password
       end
       params = {
         user: {
