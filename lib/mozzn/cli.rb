@@ -39,7 +39,7 @@ module Mozzn
       if auth_token == nil
         say response['info'], :red
       else
-        Mozzn.config.add('token', auth_token) 
+        Mozzn::Config.new.add('token', auth_token) 
         say response['info'], :green 
         git_check
         ssh_key_check
