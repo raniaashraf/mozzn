@@ -87,8 +87,10 @@ describe Mozzn::Cli do
 
   describe "mozzn login" do
   	describe "with valid params in interactive shell" do
-  		it "returns logged in" do
-  			pending
+  		it "returns logged in", focused: true do
+  			@cli.options = {email: 'rania@overcstudios.com', password: '12345678'}
+	  		output = capture(:stdout) { @cli.login }
+	  		expect(output).to match('logged in')
 			end
 		end
 
