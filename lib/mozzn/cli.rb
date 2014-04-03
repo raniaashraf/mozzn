@@ -16,11 +16,18 @@ module Mozzn
 
     desc 'login', 'Login with your mozzn credentials'
     # mozzn login 
-    def login 
+    def login
+    method_option :email, :aliases => "-e", :desc => "Mozzn email"
+    method_option :key_path, :aliases => "-p", :desc => "Mozzn password"
       mozzn = Mozzn::Api.new
-      hl = HighLine.new
-      email = hl.ask 'Mozzn email: '
-      password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
+      if !(options[:email].present? && options[:password].present?)
+        hl = HighLine.new
+        email = hl.ask 'Mozzn email: '
+        password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
+      else
+        emial = options[:email]
+        password = options[:password]
+      end
       params = {
         user: {
           email: email,
