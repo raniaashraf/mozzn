@@ -6,10 +6,6 @@ def unique_name
   "APP#{uuid}"
 end
 
-def shell
-  @shell ||= Thor::Shell::Basic.new
-end
-
 describe Mozzn::Cli do
   before :each do
     @cli = Mozzn::Cli.new
@@ -97,9 +93,7 @@ describe Mozzn::Cli do
           email: 'invalid@example.com',
           password: '12345678'
         }
-        output = capture(:stdout) { @cli.login }
-        output.chomp!
-        expect(output).to match("Error with your email or password")
+        expect { @cli.login }.to raise_error(Thor::Error, "Error with your email or password")
       end
     end
 
@@ -109,9 +103,7 @@ describe Mozzn::Cli do
           email: '',
           password: ''
         }
-        output = capture(:stdout) { @cli.login }
-        output.chomp!
-        expect(output).to match("Error with your email or password")
+        expect { @cli.login }.to raise_error(Thor::Error, "Error with your email or password")
       end
     end
 

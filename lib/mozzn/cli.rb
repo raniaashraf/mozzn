@@ -1,5 +1,4 @@
 require 'thor'
-require 'terminal-table'
 require 'highline'
 require 'cocaine'
 require 'rubygems'
@@ -39,7 +38,7 @@ module Mozzn
       response = mozzn.post(:sessions, params)
       auth_token = response['data']['auth_token']
       if auth_token == nil
-        say response['info'], :red
+        raise Thor::Error, response['info']
       else
         Mozzn::Config.new.add('token', auth_token) 
         say response['info'], :green 
@@ -103,16 +102,13 @@ module Mozzn
         begin
           git.commit('First commit')
         rescue Git::GitExecuteError => e
-          output = 'Nothing added to be commit.' 
-          say output, :red
-          return false
+          raise Thor::Error, 'Nothing added to be commit.'
         end
       end
       begin
         git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
       rescue Git::GitExecuteError => e
-        output = 'You already have this remote.' 
-        say output, :red
+        say 'You already have this remote.', :red
         return false
       end
     end
@@ -132,8 +128,7 @@ module Mozzn
       response = mozzn.get(path, params)
         say response['info'], :green   
       rescue JSON::ParserError => e
-        say "You do not have an application with name #{params[:name]}!", :red
-        return false 
+        raise Thor::Error,"You do not have an application with name #{params[:name]}!"
       end
       
     end
@@ -152,9 +147,7 @@ module Mozzn
         begin
           output = line.run
         rescue Cocaine::ExitStatusError => e
-          output = 'Unable to find git it is either not installed or not in your $PATH.' 
-          say output, :red
-          return false
+          raise Thor::Error, 'Unable to find git it is either not installed or not in your $PATH.' 
         end
       end
 
@@ -162,7 +155,7 @@ module Mozzn
       def ssh_key_check
         ssh = ['~/.ssh/id_rsa.pub','~/.ssh/id_dsa.pub']
         unless ssh.map { |ssh| File.exist?(File.expand_path(ssh))} 
-          say "Unable to find an SSH key in #{File.expand_path('~/.ssh/')}. ", :red
+          raise Thor::Error, "Unable to find an SSH key in #{File.expand_path('~/.ssh/')}. "
         end
       end
     end
