@@ -16,11 +16,11 @@ module Mozzn
 
     desc 'login', 'Login with your mozzn credentials'
     # mozzn login
-    method_option :email, :aliases => "-e", :desc => "Mozzn email"
+    method_option :email, :aliases => "-u", :desc => "Mozzn email"
     method_option :password, :aliases => "-p", :desc => "Mozzn password" 
     def login
       mozzn = Mozzn::Api.new
-      if !(options[:email].present? && options[:password].present?)
+      if options[:email].nil? && options[:password].nil?
         hl = HighLine.new
         email = hl.ask 'Mozzn email: '
         password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
