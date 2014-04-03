@@ -25,8 +25,7 @@ module Mozzn
         email = hl.ask 'Mozzn email: '
         password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
       elsif options[:email].nil? || options[:password].nil?
-        say 'Email and password must be provided! ', :red
-        return
+        raise Thor::Error, "Email and password must be provided!"
       else
         email = options[:email]
         password = options[:password]
@@ -60,8 +59,7 @@ module Mozzn
       elsif options[:public_key].present?
         public_key = options[:public_key]
       else
-        say "You must enter an SSH key path or a public SSH key! " , :red
-        return
+        raise Thor::Error, "You must enter an SSH key path or a public SSH key!"
       end
 
       if public_key.nil?
@@ -70,8 +68,7 @@ module Mozzn
             public_key = f.read
           end
         else
-          say "Unable to read #{key_path}, file does not exist or not accessible!", :red
-          return
+          raise Thor::Error, "Unable to read #{key_path}, file does not exist or not accessible!"
         end
       end
 
@@ -90,8 +87,7 @@ module Mozzn
     def create_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
-        say 'You must enter Application Name! ', :red
-        return
+        raise Thor::Error, "You must enter Application Name!"
       end
       path = 'applications'
       params = {
@@ -126,8 +122,7 @@ module Mozzn
     def remove_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
-        say "You must enter Application Name!", :red
-        return
+        raise Thor::Error, "You must enter Application Name!"
       end
       params = {
         name: name
