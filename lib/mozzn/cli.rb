@@ -25,7 +25,7 @@ module Mozzn
         email = hl.ask 'Mozzn email: '
         password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
       else
-        emial = options[:email]
+        email = options[:email]
         password = options[:password]
         puts email
         puts password
