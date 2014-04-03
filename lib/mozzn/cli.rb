@@ -17,7 +17,7 @@ module Mozzn
     desc 'login', 'Login with your mozzn credentials'
     # mozzn login
     method_option :email, :aliases => "-e", :desc => "Mozzn email"
-    method_option :key_path, :aliases => "-p", :desc => "Mozzn password" 
+    method_option :password, :aliases => "-p", :desc => "Mozzn password" 
     def login
       mozzn = Mozzn::Api.new
       if !(options[:email].present? && options[:password].present?)
