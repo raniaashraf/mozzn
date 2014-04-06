@@ -148,17 +148,17 @@ module Mozzn
       say 'UnexpectedOutput', :red
     end
 
-    desc 'update', 'To update the installed gem'
+    desc 'update', 'Tofor show if there is an update the CLI'
     def update
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
-        response = @connection.get 
-        body = JSON.parse(response.body)
-        versions = body.map { |n| n['number'] }
-        if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
-          say 'An update is available.', :yellow
-        else
-          say 'You have the latest version.', :green
-        end
+      response = @connection.get 
+      body = JSON.parse(response.body)
+      versions = body.map { |n| n['number'] }
+      if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
+        say 'An update is available. To install it run the following command $ update gem mozzn', :yellow
+      else
+        say 'You have the latest version.', :green
+      end
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
