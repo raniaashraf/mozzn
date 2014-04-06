@@ -81,8 +81,8 @@ module Mozzn
       }
       response = mozzn.post(path, params)
       say response['info'], :green
-    # rescue Mozzn::Disconnected
-    #   say 'Unable to connect to Mozzn check the internet connection! check the internet connection!', :red
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection! check the internet connection!', :red
     end
 
     desc 'create_app APPNAME', 'create a new application'
@@ -115,8 +115,8 @@ module Mozzn
         say 'You already have this remote.', :red
         return false
       end
-    # rescue Mozzn::Disconnected
-    #   say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
     end
 
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
@@ -136,8 +136,8 @@ module Mozzn
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with name #{params[:name]}!"
       end
-    # rescue Mozzn::Disconnected
-    #   say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
