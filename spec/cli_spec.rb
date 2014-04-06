@@ -34,7 +34,7 @@ describe Mozzn::Cli do
 
     describe "without params " do
       it "returns You must enter Application Name! " do
-        expect { @cli.create_app }.to raise_error(Thor::Error, "You must enter Application Name!")
+        expect { @cli.create_app }.to raise_error(Thor::Error, "You must enter application name.")
       end
     end
   end
@@ -67,13 +67,13 @@ describe Mozzn::Cli do
     describe "with invalid SSH key path" do
       it "returns Unable to read /invalid_path, file does not exist or not accessible!" do
         @cli.options = {key_path: '/invalid_path'}
-        expect { @cli.add_key }.to raise_error(Thor::Error, "Unable to read /invalid_path, file does not exist or not accessible!")
+        expect { @cli.add_key }.to raise_error(Thor::Error, "Unable to read /invalid_path. File does not exist or not accessible.")
       end
     end
 
     describe "without params " do
       it "returns You must enter an SSH key path or a public SSH key!" do
-        expect { @cli.add_key }.to raise_error(Thor::Error, "You must enter an SSH key path or a public SSH key!")
+        expect { @cli.add_key }.to raise_error(Thor::Error, "Neither a key path or an SSH key were provided. You must use -p or -k options.")
       end
     end
   end
