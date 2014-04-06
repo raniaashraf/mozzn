@@ -46,7 +46,7 @@ module Mozzn
         ssh_key_check
       end
     rescue Mozzn::Disconnected
-      panic 'Unable to connect to Mozzn'
+      say 'Unable to connect to Mozzn', :red
     end
 
     desc 'add_key', 'Add your SSH Public Key'
