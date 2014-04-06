@@ -45,6 +45,8 @@ module Mozzn
         git_check
         ssh_key_check
       end
+    rescue Gub::Disconnected
+      panic 'Unable to connect to Mozzn'
     end
 
     desc 'add_key', 'Add your SSH Public Key'

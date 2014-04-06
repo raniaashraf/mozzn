@@ -13,13 +13,18 @@ module Mozzn
 
     def get path, parms
       response = @connection.get uri(path), parms
+      rescue Faraday::Error::ConnectionFailed
+        raise Gub::Disconnected
       JSON.parse(response.body)
     end
 
     def post path, parms
       response = @connection.post uri(path), parms
+      rescue Faraday::Error::ConnectionFailed
+        raise Gub::Disconnected
       JSON.parse(response.body)
     end
+
 
     private
     def uri path
