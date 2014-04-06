@@ -76,34 +76,34 @@ describe Mozzn::Cli do
 
   describe "mozzn login" do
     describe "with valid params " do
-      it "returns logged in" do
+      it "Successfully logged in." do
         @cli.options = {
           email: 'rania@overcstudios.com',
           password: '12345678'
         }
         output = capture(:stdout) { @cli.login }
         output.chomp!
-        expect(output).to match("Logged in")
+        expect(output).to match("Successfully logged in.")
       end
     end
 
     describe "with invalid params " do
-      it "returns Error with your email or password" do
+      it "returns Invalid email or password." do
         @cli.options = {
           email: 'invalid@example.com',
           password: '12345678'
         }
-        expect { @cli.login }.to raise_error(Thor::Error, "Error with your email or password")
+        expect { @cli.login }.to raise_error(Thor::Error, "Invalid email or password.")
       end
     end
 
     describe "with nil params " do
-      it "returns Error with your email or password" do
+      it "returns Invalid email or password." do
         @cli.options = {
           email: '',
           password: ''
         }
-        expect { @cli.login }.to raise_error(Thor::Error, "Error with your email or password")
+        expect { @cli.login }.to raise_error(Thor::Error, "Invalid email or password.")
       end
     end
 
