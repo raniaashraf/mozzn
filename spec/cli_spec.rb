@@ -76,7 +76,7 @@ describe Mozzn::Cli do
 
   describe "mozzn login" do
     describe "with valid params " do
-      it "Successfully logged in." do
+      it "returns Successfully logged in." do
         @cli.options = {
           email: 'rania@overcstudios.com',
           password: '12345678'
