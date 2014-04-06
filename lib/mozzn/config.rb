@@ -27,7 +27,6 @@ module Mozzn
     end
     
     def write
-      puts data.inspect
       File.open(self.rc, 'w') { |f| YAML.dump(self.data, f) }
     end
     

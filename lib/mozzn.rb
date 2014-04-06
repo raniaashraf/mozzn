@@ -3,23 +3,13 @@ require "mozzn/version"
 require 'mozzn/config'
 require 'mozzn/api'
 require 'mozzn/cli'
-require 'mozzn/logger'
 
 
 module Mozzn
   class << self
-    attr_accessor   :debug, :log,:config
-    def start debug
-      @debug = debug
-      # Initialize log first
-      @log = Mozzn::Logger.new
-      # Now load the congiuration
-      @config = Mozzn::Config.new
-
-      @chimera = Mozzn::Api.new
-
+    def start 
       # Invoke our CLI
-      Mozzn::CLI.start
+      Mozzn::Cli.start
     end
   end
 end

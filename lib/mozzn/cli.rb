@@ -1,5 +1,4 @@
 require 'thor'
-require 'terminal-table'
 require 'highline'
 require 'cocaine'
 require 'rubygems'
@@ -7,7 +6,7 @@ require 'git'
 require 'mozzn/version'
 
 module Mozzn
-  class CLI < Thor
+  class Cli < Thor
     include Thor::Actions
     
     trap(:INT) { exit 1 }
@@ -15,12 +14,21 @@ module Mozzn
     default_task :help
 
     desc 'login', 'Login with your mozzn credentials'
-    # mozzn login 
-    def login 
+    # mozzn login
+    method_option :email, :aliases => "-u", :desc => "Mozzn email"
+    method_option :password, :aliases => "-p", :desc => "Mozzn password" 
+    def login
       mozzn = Mozzn::Api.new
-      hl = HighLine.new
-      email = hl.ask 'Mozzn email: '
-      password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
+      if options[:email].nil? && options[:password].nil?
+        hl = HighLine.new
+        email = hl.ask 'Mozzn email: '
+        password = hl.ask('Mozzn password (we will not store this): ') { |q| q.echo = "*" }
+      elsif options[:email].nil? || options[:password].nil?
+        raise Thor::Error, "Email and password must be provided!"
+      else
+        email = options[:email]
+        password = options[:password]
+      end
       params = {
         user: {
           email: email,
@@ -30,9 +38,9 @@ module Mozzn
       response = mozzn.post(:sessions, params)
       auth_token = response['data']['auth_token']
       if auth_token == nil
-        say response['info'], :red
+        raise Thor::Error, response['info']
       else
-        Mozzn.config.add('token', auth_token) 
+        Mozzn::Config.new.add('token', auth_token) 
         say response['info'], :green 
         git_check
         ssh_key_check
@@ -44,15 +52,13 @@ module Mozzn
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
     def add_key
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if options[:key_path].present?
         key_path = File.expand_path(options[:key_path])
       elsif options[:public_key].present?
         public_key = options[:public_key]
       else
-        hl = HighLine.new
-        key_path = hl.ask 'SSH key path: '
-        key_path = File.expand_path(key_path)
+        raise Thor::Error, "You must enter an SSH key path or a public SSH key!"
       end
 
       if public_key.nil?
@@ -61,8 +67,7 @@ module Mozzn
             public_key = f.read
           end
         else
-          say "Unable to read #{key_path}, file does not exist or not accessible!", :red
-          return
+          raise Thor::Error, "Unable to read #{key_path}, file does not exist or not accessible!"
         end
       end
 
@@ -79,10 +84,9 @@ module Mozzn
     desc 'create_app APPNAME', 'create a new application'
     # mozzn create_app
     def create_app name = nil
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
-        hl = HighLine.new
-        name = hl.ask 'Application name: '
+        raise Thor::Error, "You must enter Application Name!"
       end
       path = 'applications'
       params = {
@@ -98,16 +102,13 @@ module Mozzn
         begin
           git.commit('First commit')
         rescue Git::GitExecuteError => e
-          output = 'Nothing added to be commit.' 
-          say output, :red
-          return false
+          raise Thor::Error, 'Nothing added to be commit.'
         end
       end
       begin
         git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
       rescue Git::GitExecuteError => e
-        output = 'You already have this remote.' 
-        say output, :red
+        say 'You already have this remote.', :red
         return false
       end
     end
@@ -115,10 +116,9 @@ module Mozzn
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
 
     def remove_app name = nil
-      mozzn = Mozzn::Api.new(Mozzn.config.read['token'])
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
-        hl = HighLine.new
-        name = hl.ask 'Application name: '
+        raise Thor::Error, "You must enter Application Name!"
       end
       params = {
         name: name
@@ -128,8 +128,7 @@ module Mozzn
       response = mozzn.get(path, params)
         say response['info'], :green   
       rescue JSON::ParserError => e
-        say "You do not have an application with name #{params[:name]}!", :red
-        return false 
+        raise Thor::Error,"You do not have an application with name #{params[:name]}!"
       end
       
     end
@@ -148,9 +147,7 @@ module Mozzn
         begin
           output = line.run
         rescue Cocaine::ExitStatusError => e
-          output = 'Unable to find git it is either not installed or not in your $PATH.' 
-          say output, :red
-          return false
+          raise Thor::Error, 'Unable to find git it is either not installed or not in your $PATH.' 
         end
       end
 
@@ -158,7 +155,7 @@ module Mozzn
       def ssh_key_check
         ssh = ['~/.ssh/id_rsa.pub','~/.ssh/id_dsa.pub']
         unless ssh.map { |ssh| File.exist?(File.expand_path(ssh))} 
-          say "Unable to find an SSH key in #{File.expand_path('~/.ssh/')}. ", :red
+          raise Thor::Error, "Unable to find an SSH key in #{File.expand_path('~/.ssh/')}. "
         end
       end
     end
