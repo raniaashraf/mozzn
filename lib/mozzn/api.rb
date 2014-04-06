@@ -9,20 +9,19 @@ module Mozzn
     
     def initialize token = nil
       @connection = Faraday.new('http://localhost:3000/api/v1/')
+      rescue Faraday::Error::ConnectionFailed
+        raise Mozzn::Disconnected
+        return
       @token = token
     end
 
     def get path, parms
       response = @connection.get uri(path), parms
-      rescue Faraday::Error::ConnectionFailed
-        raise Mozzn::Disconnected
       JSON.parse(response.body)
     end
 
     def post path, parms
       response = @connection.post uri(path), parms
-      rescue Faraday::Error::ConnectionFailed
-        raise Mozzn::Disconnected
       JSON.parse(response.body)
     end
 
