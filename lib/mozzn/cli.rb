@@ -153,7 +153,7 @@ module Mozzn
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
         response = @connection.get 
         body = JSON.parse(response.body)
-        say body.map { |n| n['number'] }.join("\n"), :green
+        say body.map({ |n| n['number'] }).join("\n"), :green
     end 
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
