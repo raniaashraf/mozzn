@@ -148,6 +148,14 @@ module Mozzn
       say 'UnexpectedOutput', :red
     end
 
+    desc 'update', 'To update the installed gem'
+    def update
+      @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
+        response = @connection.get 
+        JSON.parse(response.body)
+        puts "response: #{response.inspect}"
+    end 
+
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
       puts 'Primary help topics, type "mozzn help COMMAND" for more details:'
