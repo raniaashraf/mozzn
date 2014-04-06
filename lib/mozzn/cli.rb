@@ -153,8 +153,13 @@ module Mozzn
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
         response = @connection.get 
         body = JSON.parse(response.body)
-        say body.map({ |n| n['number'] }).join("\n"), :green
-    end 
+        versions = body.map({ |n| n['number'] })
+        if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
+          say 'An update is available.', :yellow
+        else
+          say 'You have the latest version.', :yellow
+        end
+    end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
