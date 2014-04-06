@@ -8,7 +8,7 @@ module Mozzn
     attr_accessor :token
     
     def initialize token = nil
-      @connection = Faraday.new('http://localhost:3000/api/v1/')
+      @connection = Faraday.new('http://mozzn.com/api/v1/')
       @token = token
     end
 
@@ -18,7 +18,12 @@ module Mozzn
       rescue Faraday::Error::ConnectionFailed => e
         raise Mozzn::Disconnected
       end
-      JSON.parse(response.body)
+      begin
+        JSON.parse(response.body)
+      rescue JSON::ParserError => e
+        raise Mozzn::UnexpectedOutput
+      end
+      
     end
 
     def post path, parms
@@ -27,7 +32,12 @@ module Mozzn
       rescue Faraday::Error::ConnectionFailed => e
         raise Mozzn::Disconnected
       end
-      JSON.parse(response.body)
+      begin
+        JSON.parse(response.body)
+      rescue JSON::ParserError => e
+        raise Mozzn::UnexpectedOutput
+      end
+      
     end
 
 

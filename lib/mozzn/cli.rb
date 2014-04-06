@@ -45,8 +45,10 @@ module Mozzn
         git_check
         ssh_key_check
       end
-    # rescue Mozzn::Disconnected
-    #   say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'add_key', 'Add your SSH Public Key'
@@ -83,6 +85,8 @@ module Mozzn
       say response['info'], :green
     rescue Mozzn::Disconnected
       say 'Unable to connect to Mozzn check the internet connection! check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'create_app APPNAME', 'create a new application'
@@ -117,6 +121,8 @@ module Mozzn
       end
     rescue Mozzn::Disconnected
       say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput'
     end
 
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
@@ -138,6 +144,8 @@ module Mozzn
       end
     rescue Mozzn::Disconnected
       say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
