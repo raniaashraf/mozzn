@@ -1,5 +1,6 @@
 require 'faraday'
 require 'json'
+require 'mozzn/exceptions'
 
 module Mozzn
   class Api
