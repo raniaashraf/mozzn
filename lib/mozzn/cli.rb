@@ -150,7 +150,7 @@ module Mozzn
 
     desc 'update', 'To update the installed gem'
     def update
-      @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
+      @connection = Faraday.new('https://rubygems.org/api/v1/activity/just_updated.json')
         response = @connection.get 
         JSON.parse(response.body)
         say response.inspect, :green
