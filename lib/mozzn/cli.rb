@@ -45,7 +45,7 @@ module Mozzn
         git_check
         ssh_key_check
       end
-    rescue Gub::Disconnected
+    rescue Mozzn::Disconnected
       panic 'Unable to connect to Mozzn'
     end
 
