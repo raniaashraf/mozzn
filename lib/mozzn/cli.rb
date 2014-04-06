@@ -150,6 +150,7 @@ module Mozzn
 
     desc 'update', 'Tofor show if there is an update the CLI'
     def update
+      # TODO after gem release https://rubygems.org/api/v1/versions/mozzn.json
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
       response = @connection.get 
       body = JSON.parse(response.body)
