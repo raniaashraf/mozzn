@@ -157,7 +157,7 @@ module Mozzn
         if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
           say 'An update is available.', :yellow
         else
-          say 'You have the latest version.', :yellow
+          say 'You have the latest version.', :green
         end
     end
 
