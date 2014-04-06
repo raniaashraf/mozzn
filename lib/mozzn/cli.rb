@@ -153,7 +153,7 @@ module Mozzn
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
         response = @connection.get 
         body = JSON.parse(response.body)
-        versions = body.map({ |n| n['number'] })
+        versions = body.map { |n| n['number'] }
         if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
           say 'An update is available.', :yellow
         else
