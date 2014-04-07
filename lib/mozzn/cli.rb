@@ -165,13 +165,13 @@ module Mozzn
       end
     end
 
-    desc 'registeration', 'Create an account on mozzn.'
+    desc 'registration', 'Create an account on mozzn.'
     method_option :name, :aliases => "-n", :desc => "Username."
     method_option :email, :aliases => "-u", :desc => "User email used to login."
     method_option :password, :aliases => "-p", :desc => "User password."
     method_option :password_confirmation, :aliases => "-c", :desc => "password_confirmation."
     
-    def registeration
+    def registration
       if options.present?
         name = options[:name] 
         email = options[:email] 
