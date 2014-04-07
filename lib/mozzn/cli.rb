@@ -194,19 +194,12 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      errors = response['data']['errors'].inspect
+      errors = JSON.parse(response['data']['errors'])
       if errors.present?
-        say errors, :red
+        say "#{response['info']}: #{errors.map {|e| e.join(' ')}}", :red
       else
         say response['info'], :green
       end
-      
-
-      # name = options[:name] if options[:name].present?
-      # email = options[:email] if options[:email].present?
-      # password = options[:password] if options[:password].present?
-      # password_confirmation = options[:password_confirmation] if options[:password_confirmation].present?
-      
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
