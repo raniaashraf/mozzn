@@ -86,13 +86,24 @@ describe Mozzn::Cli do
   describe "mozzn login" do
     describe "with valid params " do
       it "returns Successfully logged in." do
+        name = 'rania'
+        email = unique_email
+        password = '12345678'
+        password_confirmation = '12345678'
         @cli.options = {
-          email: 'rania@overcstudios.com',
-          password: '12345678'
+          name: name,
+          email: email ,
+          password: password,
+          password_confirmation: password_confirmation
         }
-        output = capture(:stdout) { @cli.login }
-        output.chomp!
-        expect(output).to match("Successfully logged in.")
+        output = capture(:stdout) { @cli.registration }
+        puts output
+        cli1 = Mozzn::Cli.new
+        cli1.options = {
+          email:email,
+          password: password
+        }
+        expect{ @cli.login }.to raise_error(Thor::Error,"You have to confirm your account before continuing.")
       end
     end
 
@@ -181,43 +192,96 @@ describe Mozzn::Cli do
 
     describe "with missing email" do
       it "should return email missing" do
-        pending 
+        @cli.options = {
+          name: 'rania',
+          password: '12345678',
+          password_confirmation: '12345678'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /email/ 
       end
     end
 
     describe "with missing password" do
       it "should return password missing" do
-        pending
+        @cli.options = {
+          name: 'rania',
+          email: unique_name,
+          password_confirmation: '12345678'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /password/ 
       end
     end
 
     describe "with missing confirmation Password" do
       it "should return password confirmation Missing" do
-        pending
+        @cli.options = {
+          name: 'rania',
+          email: unique_email,
+          password: '12345678'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /password_confirmation/ 
       end
     end
 
     describe "with invalid email" do
       it "should return invalid email" do
-        pending
+        @cli.options = {
+          name: 'rania',
+          email: 'qqqqqqq',
+          password: '12345678',
+          password_confirmation: '12345678'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /email/
       end
     end
 
-    describe "with invalid password" do
-      it "should return invalid password" do
-        pending
+    describe "with short password" do
+      it "should short password" do
+        @cli.options = {
+          name: 'rania',
+          email: unique_email,
+          password: '123',
+          password_confirmation: '123'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /password/
       end
     end
 
     describe "with unmatched password and confirmation password" do
       it "should return password and confirmation password are not matched" do
-        pending
+        @cli.options = {
+          name: 'rania',
+          email: unique_email,
+          password: '12345678',
+          password_confirmation: '87654321'
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be  =~ /password_confirmation/
       end
     end
 
     describe "with nil parammeters" do
       it "should return Parameter Missing" do
-        pending
+        @cli.options = {
+          name: nil,
+          email: nil,
+          password: nil,
+          password_confirmation: nil
+        }
+        output = capture(:stdout) { @cli.registration }
+        output.chomp!
+        expect(output).to be =~ /email/
       end
     end
 
