@@ -164,7 +164,7 @@ describe Mozzn::Cli do
     end
   end
 
-  describe "mozzn registeration" do
+  describe "mozzn registration" do
     describe "with valid params" do
       it "returns Succesfully Registered" do
         @cli.options = {
@@ -173,7 +173,7 @@ describe Mozzn::Cli do
           password: '12345678',
           confirmation_password: '12345678'
         }
-        output = capture(:stdout) { @cli.registeration }
+        output = capture(:stdout) { @cli.registration }
         output.chomp!
         expect(output).to match("Successfully Registered")
       end
