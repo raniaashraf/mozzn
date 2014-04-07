@@ -196,7 +196,7 @@ module Mozzn
       response = mozzn.post(:registrations, params)
       errors = JSON.parse(response['data']['errors'])
       if errors.present?
-        say "#{response['info']}, the following errors were found:\n#{errors.map {|e| e.join(' ')}.join("\n  ")}. Please try again.", :red
+        say "#{response['info']}, the following errors were found:\n  #{errors.map {|e| e.join(' ')}.join("\n  ")}\nPlease try again.", :red
         # TODO: re-run registration
       else
         say response['info'], :green
