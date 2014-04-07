@@ -196,7 +196,7 @@ module Mozzn
       response = mozzn.post(:registrations, params)
       errors = JSON.parse(response['data']['errors'])
       if errors.present?
-        say "#{response['info']}: #{errors.map {|e| e.join(' ')}}", :red
+        say "#{response['info']}: #{errors.map {|e| e.join(' ')}.join(', ')}", :red
       else
         say response['info'], :green
       end
