@@ -169,8 +169,8 @@ describe Mozzn::Cli do
       it "returns Succesfully Registered" do
         @cli.options = {
           name: 'rania',
-          email: unique_email
-          password: '12345678'
+          email: unique_email,
+          password: '12345678',
           confirmation_password: '12345678'
         }
         output = capture(:stdout) { @cli.registeration }
@@ -179,18 +179,48 @@ describe Mozzn::Cli do
       end
     end
 
-    describe "with invalid params" do
-      it "returns Succesfully Registered" do
-        @cli.options = {
-          name: 'rania',
-          email: unique_email
-          password: '12345678'
-          confirmation_password: '12345678'
-        }
-        output = capture(:stdout) { @cli.registeration }
-        output.chomp!
-        expect(output).to match("Successfully Registered")
+    describe "with missing email" do
+      it "should return email missing" do
+        pending 
       end
     end
+
+    describe "with missing password" do
+      it "should return password missing" do
+        pending
+      end
+    end
+
+    describe "with missing confirmation Password" do
+      it "should return password confirmation Missing" do
+        pending
+      end
+    end
+
+    describe "with invalid email" do
+      it "should return invalid email" do
+        pending
+      end
+    end
+
+    describe "with invalid password" do
+      it "should return invalid password" do
+        pending
+      end
+    end
+
+    describe "with unmatched password and confirmation password" do
+      it "should return password and confirmation password are not matched" do
+        pending
+      end
+    end
+
+    describe "with nil parammeters" do
+      it "should return Parameter Missing" do
+        pending
+      end
+    end
+
+
   end
 end

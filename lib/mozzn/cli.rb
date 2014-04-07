@@ -165,6 +165,27 @@ module Mozzn
       end
     end
 
+    desc 'registeration', 'Create an account on mozzn.'
+    method_option :name, :aliases => "-n", :desc => "Username."
+    method_option :email, :aliases => "-u", :desc => "User email used to login."
+    method_option :password, :aliases => "-p", :desc => "User password."
+    method_option :password_confirmation, :aliases => "-c", :desc => "password_confirmation."
+    
+    def registeration
+      if options.present?
+        puts "hiiiiiiii"
+      else
+        puts "yeeeeeeeee"
+      end
+
+
+      # name = options[:name] if options[:name].present?
+      # email = options[:email] if options[:email].present?
+      # password = options[:password] if options[:password].present?
+      # password_confirmation = options[:password_confirmation] if options[:password_confirmation].present?
+      
+    end
+
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
       puts 'Primary help topics, type "mozzn help COMMAND" for more details.'
