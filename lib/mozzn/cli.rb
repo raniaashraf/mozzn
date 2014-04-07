@@ -172,6 +172,7 @@ module Mozzn
     method_option :password_confirmation, :aliases => "-c", :desc => "password_confirmation."
     
     def registration
+      mozzn = Mozzn::Api.new
       if options.present?
         name = options[:name] 
         email = options[:email] 
