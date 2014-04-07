@@ -194,7 +194,7 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      puts response.inspect
+      say response['info'], :green
 
       # name = options[:name] if options[:name].present?
       # email = options[:email] if options[:email].present?
