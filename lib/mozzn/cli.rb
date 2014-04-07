@@ -173,11 +173,27 @@ module Mozzn
     
     def registeration
       if options.present?
-        puts "hiiiiiiii"
+        name = options[:name] 
+        email = options[:email] 
+        password = options[:password] 
+        password_confirmation = options[:password_confirmation] 
       else
-        puts "yeeeeeeeee"
+        h = HighLine.new
+        name = h.ask("Username: ")
+        email = h.ask("Email: ")
+        password = h.ask("Password: ")
+        password_confirmation = h.ask("password_confirmation: ")
       end
-
+      params = {
+        user: {
+          name: name,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation
+        }
+      }
+      response = mozzn.post(:registerations, params)
+      puts response.inspect
 
       # name = options[:name] if options[:name].present?
       # email = options[:email] if options[:email].present?
