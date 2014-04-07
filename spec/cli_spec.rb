@@ -177,7 +177,7 @@ describe Mozzn::Cli do
 
   describe "mozzn registration" do
     describe "with valid params" do
-      it "returns Succesfully Registered" do
+      it "returns Succesfully registered" do
         @cli.options = {
           name: 'rania',
           email: unique_email ,
@@ -186,7 +186,7 @@ describe Mozzn::Cli do
         }
         output = capture(:stdout) { @cli.registration }
         output.chomp!
-        expect(output).to match("Successfully Registered")
+        expect(output).to match("Successfully registered")
       end
     end
 
