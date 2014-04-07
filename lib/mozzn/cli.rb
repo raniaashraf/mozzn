@@ -192,7 +192,7 @@ module Mozzn
           password_confirmation: password_confirmation
         }
       }
-      response = mozzn.post(:registerations, params)
+      response = mozzn.post(:registrations, params)
       puts response.inspect
 
       # name = options[:name] if options[:name].present?
