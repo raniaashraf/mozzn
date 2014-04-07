@@ -169,9 +169,9 @@ describe Mozzn::Cli do
       it "returns Succesfully Registered" do
         @cli.options = {
           name: 'rania',
-          email: unique_email,
+          email: unique_email ,
           password: '12345678',
-          confirmation_password: '12345678'
+          password_confirmation: '12345678'
         }
         output = capture(:stdout) { @cli.registration }
         output.chomp!

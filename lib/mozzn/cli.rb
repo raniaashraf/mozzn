@@ -169,11 +169,11 @@ module Mozzn
     method_option :name, :aliases => "-n", :desc => "Username."
     method_option :email, :aliases => "-u", :desc => "User email used to login."
     method_option :password, :aliases => "-p", :desc => "User password."
-    method_option :password_confirmation, :aliases => "-c", :desc => "password_confirmation."
+    method_option :password_confirmation, :aliases => "-c", :desc => "Password_confirmation."
     
     def registration
       mozzn = Mozzn::Api.new
-      if options.present?
+      if !options.nil?
         name = options[:name] 
         email = options[:email] 
         password = options[:password] 
@@ -194,13 +194,13 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      errors = JSON.parse(response['data']['errors'])
-      if errors.present?
-        say "#{response['info']}, the following errors were found:\n * #{errors.map {|e| e.join(' ')}.join("\n * ")}\nPlease try again.", :red
-        # TODO: re-run registration
-      else
+      # errors = JSON.parse(response['data']['errors'])
+      # if errors.present?
+      #   say "#{response['info']}, the following errors were found:\n * #{errors.map {|e| e.join(' ')}.join("\n * ")}\nPlease try again.", :red
+      #   # TODO: re-run registration
+      # else
         say response['info'], :green
-      end
+      # end
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
