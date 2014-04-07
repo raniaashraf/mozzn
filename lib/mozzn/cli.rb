@@ -173,7 +173,7 @@ module Mozzn
     
     def registration
       mozzn = Mozzn::Api.new
-      if !options.nil?
+      if options.present?
         name = options[:name] 
         email = options[:email] 
         password = options[:password] 
