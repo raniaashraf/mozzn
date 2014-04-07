@@ -194,7 +194,14 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      say response['info'], :green
+      body = JSON.parse(response.body)
+      errors = JSON.parse(body['data']['errors'])
+      if errors.present?
+        say errors, :red
+      else
+        say response['info'], :green
+      end
+      
 
       # name = options[:name] if options[:name].present?
       # email = options[:email] if options[:email].present?
