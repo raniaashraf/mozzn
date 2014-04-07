@@ -194,7 +194,7 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      body = JSON.parse(response.body)
+      body = JSON.parse(response)
       errors = JSON.parse(body['data']['errors'])
       if errors.present?
         say errors, :red
