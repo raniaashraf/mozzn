@@ -194,7 +194,7 @@ module Mozzn
         }
       }
       response = mozzn.post(:registrations, params)
-      errors = response['data']['errors'].split(',')
+      errors = response['data']['errors'].inspect
       if errors.present?
         say errors, :red
       else
