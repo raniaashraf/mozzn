@@ -6,21 +6,30 @@ require 'git'
 require 'mozzn/version'
 
 module Mozzn
+  # This class represents the Command Line Interface of mozzn Apis.
   class Cli < Thor
     include Thor::Actions
-
-    # 0. Be human, write correct english statements
-    # 1. Describe what went wrong
-    # 2. Suggest an action
     
     trap(:INT) { exit 1 }
     
     default_task :help
 
     desc 'login', 'Login with your mozzn credentials'
-    # mozzn login
+    
     method_option :email, :aliases => "-u", :desc => "Mozzn email"
-    method_option :password, :aliases => "-p", :desc => "Mozzn password" 
+    method_option :password, :aliases => "-p", :desc => "Mozzn password"
+    
+    # Login to mozzn using your mozzn email and password.
+    #
+    # Usage:
+    # mozzn login -u "foo@example.com" -p "12345678" 
+    # or 
+    # mozzn login 
+    # An interactive shell will ask for your Mozzn email and password
+    # 
+    # An Error is raised if you do not provide both email and password
+    # or if you provide wrong email or password. 
+
     def login
       mozzn = Mozzn::Api.new
       if options[:email].nil? && options[:password].nil?
@@ -56,9 +65,20 @@ module Mozzn
     end
 
     desc 'add_key', 'Add your SSH Public Key'
+    
     method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
-    # mozzn add_key
+    
+    # Add an SSH public key.
+    #
+    # Usage:
+    # mozzn add_key -k "RSA/DSA public key" 
+    # or 
+    # mozzn add_key -p "Path to RSA/DSA public key on your computer" 
+    # 
+    # An Error is raised if you do not provide a valid public SSH key
+    # or if you provide wrong path of your RSA/DSA public key.
+    
     def add_key
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if options[:key_path].present?
@@ -94,7 +114,21 @@ module Mozzn
     end
 
     desc 'create_app APPNAME', 'create a new application'
-    # mozzn create_app
+
+    # Create a new application on mozzn.
+    #
+    # Usage:
+    # mozzn create "application_name" 
+    # 
+    # It will create an application on mozzn 
+    #
+    # If you in the application path, an initial repository will be created
+    # if the application does not has one, a remote will be added with name "mozzn", 
+    # and your application will be commited 
+    #
+    # An Error is raised if you create an application with name you provide for another application
+    # or if you provide application name with spaces.
+
     def create_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
@@ -130,6 +164,15 @@ module Mozzn
 
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
 
+    # Remove spcicfic Application..
+    #
+    # Usage:
+    # mozzn remove_app "application_name" 
+    # 
+    # It will remove a specific application from your applications on mozzn 
+    #
+    # An Error is raised if you try to remove an applicaion which is does not exist.
+
     def remove_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !name.present?
@@ -152,6 +195,12 @@ module Mozzn
     end
 
     desc 'update', 'To show if there is an update for the CLI'
+
+    # To show if there is an update for the CLI.
+    #
+    # Usage:
+    # mozzn update 
+
     def update
       # TODO after gem release https://rubygems.org/api/v1/versions/mozzn.json
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
