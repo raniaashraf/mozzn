@@ -30,7 +30,7 @@ Detailed command usage:
   -k, [--public-key=PUBLIC_KEY]  
   -p, [--key-path=KEY_PATH]      
 
-Add your SSH Public Key
+Add your SSH Public Key directily or add its path
 
     $ mozzn create_app
 
@@ -58,7 +58,7 @@ For more infromation about spicific COMMAND
   -u, [--email=EMAIL]        
   -p, [--password=PASSWORD]  
 
-Login with your mozzn credentials an interactive shell will ask you about your email and password
+Login with your mozzn credentials, an interactive shell will ask you about your email and password
 
     $ mozzn remove_app
 
