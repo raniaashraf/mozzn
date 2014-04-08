@@ -15,7 +15,6 @@ Commands:
   - mozzn create_app APPNAME  
   - mozzn help COMMAND        
   - mozzn login               
-  - mozzn registration        
   - mozzn remove_app APPNAME  
   - mozzn update              
 
@@ -59,21 +58,7 @@ For more infromation about spicific COMMAND
   -u, [--email=EMAIL]        
   -p, [--password=PASSWORD]  
 
-Login with your mozzn credentials
-
-    $ mozzn registration
-
-
-
-####mozzn registration
-
-#####Options:
-  -n, [--name=NAME]                                    
-  -u, [--email=EMAIL]                                  
-  -p, [--password=PASSWORD]                            
-  -c, [--password-confirmation=PASSWORD_CONFIRMATION]  
-
-Create an account on mozzn.
+Login with your mozzn credentials an interactive shell will ask you about your email and password
 
     $ mozzn remove_app
 
