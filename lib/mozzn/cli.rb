@@ -17,7 +17,7 @@ module Mozzn
     
     default_task :help
 
-    desc 'login', 'Login with your mozzn credentials'
+    desc 'login', 'Login with your mozzn credentials an interactive shell will ask you about your email and password'
     # mozzn login
     method_option :email, :aliases => "-u", :desc => "Mozzn email"
     method_option :password, :aliases => "-p", :desc => "Mozzn password" 
