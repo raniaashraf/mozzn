@@ -13,11 +13,11 @@ module Mozzn
     end
 
     def get path, parms
-      begin
+      # begin
         response = @connection.get uri(path), parms
-      rescue Faraday::Error::ConnectionFailed => e
-        raise Mozzn::Disconnected
-      end
+      # rescue Faraday::Error::ConnectionFailed => e
+      #   raise Mozzn::Disconnected
+      # end
       begin
         JSON.parse(response.body)
       rescue JSON::ParserError => e
@@ -27,11 +27,11 @@ module Mozzn
     end
 
     def post path, parms
-      begin
+      # begin
         response = @connection.post uri(path), parms
-      rescue Faraday::Error::ConnectionFailed => e
-        raise Mozzn::Disconnected
-      end
+      # rescue Faraday::Error::ConnectionFailed => e
+      #   raise Mozzn::Disconnected
+      # end
       begin
         JSON.parse(response.body)
       rescue JSON::ParserError => e
