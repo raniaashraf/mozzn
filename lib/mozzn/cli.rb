@@ -45,6 +45,10 @@ module Mozzn
         git_check
         ssh_key_check
       end
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'add_key', 'Add your SSH Public Key'
@@ -79,6 +83,10 @@ module Mozzn
       }
       response = mozzn.post(path, params)
       say response['info'], :green
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection! check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'create_app APPNAME', 'create a new application'
@@ -111,6 +119,10 @@ module Mozzn
         say 'You already have this remote.', :red
         return false
       end
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput'
     end
 
     desc 'remove_app APPNAME', 'Remove spcicfic Application.'
@@ -130,7 +142,24 @@ module Mozzn
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with name #{params[:name]}!"
       end
-      
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn check the internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
+    end
+
+    desc 'update', 'Tofor show if there is an update the CLI'
+    def update
+      # TODO after gem release https://rubygems.org/api/v1/versions/mozzn.json
+      @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
+      response = @connection.get 
+      body = JSON.parse(response.body)
+      versions = body.map { |n| n['number'] }
+      if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
+        say 'An update is available. To install it run the following command $ update gem mozzn', :yellow
+      else
+        say 'You have the latest version.', :green
+      end
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'

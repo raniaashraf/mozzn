@@ -1,5 +1,6 @@
 require 'faraday'
 require 'json'
+require 'mozzn/exceptions'
 
 module Mozzn
   class Api
@@ -12,14 +13,33 @@ module Mozzn
     end
 
     def get path, parms
-      response = @connection.get uri(path), parms
-      JSON.parse(response.body)
+      begin
+        response = @connection.get uri(path), parms
+      rescue Faraday::Error::ConnectionFailed => e
+        raise Mozzn::Disconnected
+      end
+      begin
+        JSON.parse(response.body)
+      rescue JSON::ParserError => e
+        raise Mozzn::UnexpectedOutput
+      end
+      
     end
 
     def post path, parms
-      response = @connection.post uri(path), parms
-      JSON.parse(response.body)
+      begin
+        response = @connection.post uri(path), parms
+      rescue Faraday::Error::ConnectionFailed => e
+        raise Mozzn::Disconnected
+      end
+      begin
+        JSON.parse(response.body)
+      rescue JSON::ParserError => e
+        raise Mozzn::UnexpectedOutput
+      end
+      
     end
+
 
     private
     def uri path
