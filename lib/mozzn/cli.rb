@@ -8,10 +8,6 @@ require 'mozzn/version'
 module Mozzn
   class Cli < Thor
     include Thor::Actions
-
-    # 0. Be human, write correct english statements
-    # 1. Describe what went wrong
-    # 2. Suggest an action
     
     trap(:INT) { exit 1 }
     
