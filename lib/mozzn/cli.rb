@@ -46,7 +46,7 @@ module Mozzn
         ssh_key_check
       end
     rescue Mozzn::Disconnected
-      say 'Unable to connect to Mozzn check the internet connection!', :red
+      say 'Unable to connect to Mozzn. Please check your internet connection.', :red
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
     end
@@ -62,7 +62,7 @@ module Mozzn
       elsif options[:public_key].present?
         public_key = options[:public_key]
       else
-        raise Thor::Error, "You must enter an SSH key path or a public SSH key!"
+        raise Thor::Error, "Neither a key path or an SSH key were provided. You must use -p or -k options."
       end
 
       if public_key.nil?
@@ -71,7 +71,7 @@ module Mozzn
             public_key = f.read
           end
         else
-          raise Thor::Error, "Unable to read #{key_path}, file does not exist or not accessible!"
+          raise Thor::Error, "Unable to read #{key_path}. File does not exist or not accessible."
         end
       end
 
@@ -84,7 +84,7 @@ module Mozzn
       response = mozzn.post(path, params)
       say response['info'], :green
     rescue Mozzn::Disconnected
-      say 'Unable to connect to Mozzn check the internet connection! check the internet connection!', :red
+      say 'Unable to connect to Mozzn check the internet connection!', :red
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
     end
@@ -94,7 +94,7 @@ module Mozzn
     def create_app name = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if name == nil
-        raise Thor::Error, "You must enter Application Name!"
+        raise Thor::Error, "You must enter application name."
       end
       path = 'applications'
       params = {
@@ -106,18 +106,17 @@ module Mozzn
       say response['info'], :green
       git = Git.init
       unless File.exist?('.git')
-          git.add(:all=>true)
+          git.add(all: true)
         begin
           git.commit('First commit')
         rescue Git::GitExecuteError => e
-          raise Thor::Error, 'Nothing added to be commit.'
+          # Do nothing
         end
       end
       begin
         git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
       rescue Git::GitExecuteError => e
         say 'You already have this remote.', :red
-        return false
       end
     rescue Mozzn::Disconnected
       say 'Unable to connect to Mozzn check the internet connection!', :red
@@ -140,15 +139,15 @@ module Mozzn
       response = mozzn.get(path, params)
         say response['info'], :green   
       rescue JSON::ParserError => e
-        raise Thor::Error,"You do not have an application with name #{params[:name]}!"
+        raise Thor::Error,"You do not have an application with the name #{params[:name]}. Please check the application name."
       end
     rescue Mozzn::Disconnected
-      say 'Unable to connect to Mozzn check the internet connection!', :red
+      say 'Unable to connect to Mozzn. Check your internet connection!', :red
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
     end
 
-    desc 'update', 'Tofor show if there is an update the CLI'
+    desc 'update', 'To show if there is an update for the CLI'
     def update
       # TODO after gem release https://rubygems.org/api/v1/versions/mozzn.json
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
@@ -156,15 +155,54 @@ module Mozzn
       body = JSON.parse(response.body)
       versions = body.map { |n| n['number'] }
       if Gem::Version.new(versions.last) > Gem::Version.new(Mozzn::VERSION)
-        say 'An update is available. To install it run the following command $ update gem mozzn', :yellow
+        say 'An update is available. To install it run the following command "update gem mozzn"', :yellow
       else
         say 'You have the latest version.', :green
       end
     end
 
+    desc 'registration', 'Create an account on mozzn.'
+    method_option :name, :aliases => "-n", :desc => "Username."
+    method_option :email, :aliases => "-u", :desc => "User email used to login."
+    method_option :password, :aliases => "-p", :desc => "User password."
+    method_option :password_confirmation, :aliases => "-c", :desc => "Password_confirmation."
+    
+    def registration
+      mozzn = Mozzn::Api.new
+      if options.present?
+        name = options[:name] 
+        email = options[:email] 
+        password = options[:password] 
+        password_confirmation = options[:password_confirmation] 
+      else
+        h = HighLine.new
+        name = h.ask("Username: ")
+        email = h.ask("Email: ")
+        password = h.ask("Password: ")
+        password_confirmation = h.ask("password_confirmation: ")
+      end
+      params = {
+        user: {
+          name: name,
+          email: email,
+          password: password,
+          password_confirmation: password_confirmation
+        }
+      }
+      response = mozzn.post(:registrations, params)
+      errors = response['data']['errors']
+      if errors.present?
+        errors = JSON.parse(errors)
+        say "#{response['info']}, the following errors were found:\n * #{errors.map {|e| e.join(' ')}.join("\n * ")}\nPlease try again.", :red
+        # TODO: re-run registration
+      else
+        say response['info'], :green
+      end
+    end
+
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
-      puts 'Primary help topics, type "mozzn help COMMAND" for more details:'
+      puts 'Primary help topics, type "mozzn help COMMAND" for more details.'
       puts "Version: #{Mozzn::VERSION}"
       super command
     end
@@ -176,7 +214,7 @@ module Mozzn
         begin
           output = line.run
         rescue Cocaine::ExitStatusError => e
-          raise Thor::Error, 'Unable to find git it is either not installed or not in your $PATH.' 
+          raise Thor::Error, 'Unable to find git it is either not installed or not in your $PATH. You may need to install it or add it to $PATH.' 
         end
       end
 
