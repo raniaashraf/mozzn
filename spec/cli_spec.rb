@@ -97,7 +97,6 @@ describe Mozzn::Cli do
           password_confirmation: password_confirmation
         }
         output = capture(:stdout) { @cli.registration }
-        puts output
         cli1 = Mozzn::Cli.new
         cli1.options = {
           email:email,
@@ -284,7 +283,58 @@ describe Mozzn::Cli do
         expect(output).to be =~ /email/
       end
     end
+  end
 
+  describe "mozzn instances" do
+    describe "With valid params" do
+      describe "With an existing App having compnents and data stores" do
+        it "returns HTTP code 200:OK" do
+          pending
+        end
+      end
 
+      describe "With an existing App having compnents and no datastores" do
+        it "returns HTTP code 200:OK" do
+          pending
+        end
+      end
+    
+      describe "With an existing App having datastores and no components" do
+        it "returns HTTP code 200:OK" do
+          pending
+        end
+      end
+
+      describe "With an existing App having no datastores or components" do
+        it "returns HTTP code 200:OK" do
+          pending
+        end
+      end
+    end
+    describe "With invalid parameters" do
+      describe "with not existing application" do
+        it "returns HTTP code 422" do
+          pending 
+        end
+      end
+
+      describe "with unauthorized user" do
+        it "returns HTTP code 422" do
+          pending
+        end
+      end
+
+      describe "without name" do
+        it "should return Application name must be provided." do 
+          pending
+        end
+      end
+
+      describe "with very long application name." do
+        it "should return This application is not exist." do 
+          pending
+        end
+      end
+    end
   end
 end
