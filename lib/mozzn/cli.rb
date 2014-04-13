@@ -221,6 +221,14 @@ module Mozzn
           t.add_row [key, value]
         end
       end
+      table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
+        response['resources'].each do |resource|
+          
+          key = (resource.has_key?('role') ? resource['name'] : nil)
+          value = (resource.has_key?('role') ? resource['role'] : nil)
+          t.add_row [key, value]
+        end
+      end
       say "#{table1}", :green 
         #TODO resources with the form 'name' => name , 'command' => command  
       rescue JSON::ParserError => e
