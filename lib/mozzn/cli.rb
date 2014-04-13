@@ -213,7 +213,7 @@ module Mozzn
       path = 'applications/resources'
       begin
       response = mozzn.get(path, params)
-      table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+      table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
           
           key = (resource.has_key?('command') ? resource['name'] : nil)
@@ -221,7 +221,7 @@ module Mozzn
           t.add_row [key, value]
         end
       end
-      say "#{table}", :green 
+      say "#{table1}", :green 
         #TODO resources with the form 'name' => name , 'command' => command  
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
