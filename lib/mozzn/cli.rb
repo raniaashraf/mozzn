@@ -4,6 +4,7 @@ require 'cocaine'
 require 'rubygems'
 require 'git'
 require 'mozzn/version'
+require 'terminal-table'
 
 module Mozzn
   class Cli < Thor
@@ -212,7 +213,10 @@ module Mozzn
       path = 'applications/resources'
       begin
       response = mozzn.get(path, params)
-        say "Resources name: #{response['resources_name']}", :green 
+      table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+        
+      end
+      say "#{table}", :green 
         #TODO resources with the form 'name' => name , 'command' => command  
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
@@ -221,6 +225,7 @@ module Mozzn
       say 'Unable to connect to Mozzn. Check your internet connection!', :red
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
+    
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'

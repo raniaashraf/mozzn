@@ -28,5 +28,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "cocaine"
   spec.add_dependency "git"
   spec.add_dependency "factory_girl"
+  spec.add_dependency "terminal-table"
   
 end
