@@ -217,7 +217,7 @@ module Mozzn
         response['resources'].each do |resource|
           puts resource.inspect
           value = (resource.has_key?('command') ? resource['command'] : nil)
-          t.add_row [resource['name'], value]
+          t.add_row [(resource.has_key?('command') ? resource['name'] : nil), value]
         end
       end
       say "#{table}", :green 
