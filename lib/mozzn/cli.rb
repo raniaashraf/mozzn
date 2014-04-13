@@ -217,7 +217,7 @@ module Mozzn
       table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
           id = id.next
-          t.add_row [id, resource.name]
+          t.add_row [id, resource]
         end
       end
       say "#{table}", :green 
