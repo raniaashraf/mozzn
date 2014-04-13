@@ -212,7 +212,7 @@ module Mozzn
       path = 'applications/resources'
       begin
       response = mozzn.get(path, params)
-        say response['resources'], :green 
+        say response['resources_name'], :green 
         #TODO resources with the form 'name' => name , 'command' => command  
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
@@ -222,19 +222,6 @@ module Mozzn
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
     end
-    # desc 'instances AppName', 'To list all instances which a specific application use.'
-    
-    # def instances AppName = nil 
-    #   mozzn = Mozzn::Api.new
-    #   params = {
-    #     name: {
-    #       name: AppName
-    #     }
-    #     path = 'applications/resources'
-    #     response = mozzn.post(path, params)
-    #     say "#{response['resources']}" :green
-    #   }
-    # end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
