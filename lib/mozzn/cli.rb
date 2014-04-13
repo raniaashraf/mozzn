@@ -215,7 +215,6 @@ module Mozzn
       response = mozzn.get(path, params)
       table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
-          
           key = (resource.has_key?('command') ? resource['name'] : nil)
           value = (resource.has_key?('command') ? resource['command'] : nil)
           if key.present?
@@ -225,10 +224,11 @@ module Mozzn
       end
       table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
         response['resources'].each do |resource|
-          
           key = (resource.has_key?('role') ? resource['name'] : nil)
           value = (resource.has_key?('role') ? resource['role'] : nil)
-          t.add_row [key, value]
+          if key.present?
+            t.add_row [key, value]
+          end
         end
       end
       say "#{table1}", :green
