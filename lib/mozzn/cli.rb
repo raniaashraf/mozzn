@@ -215,7 +215,7 @@ module Mozzn
       response = mozzn.get(path, params)
       table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
-          t.add_row [id, resource['resources']]
+          t.add_row [resource['resources'].map(&:name), resource['resources']]
         end
       end
       say "#{table}", :green 
