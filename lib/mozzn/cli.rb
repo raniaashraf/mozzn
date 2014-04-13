@@ -231,8 +231,8 @@ module Mozzn
           end
         end
       end
-      say "#{table1}", :green
-      say "#{table2}", :green
+      say "#{table1}"
+      say "#{table2}"
 
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
