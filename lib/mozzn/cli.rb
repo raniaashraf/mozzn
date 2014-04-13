@@ -216,7 +216,7 @@ module Mozzn
       table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
           puts resource.inspect
-          value = (resource.has_key? ? 'command' : resource['command'] : resource['role'])
+          value = (resource.has_key? 'command' ? resource['command'] : resource['role'])
           t.add_row [resource['name'], value]
         end
       end
