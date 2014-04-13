@@ -285,11 +285,11 @@ describe Mozzn::Cli do
     end
   end
 
-  describe "mozzn instances" do
+  describe "mozzn resources" do
     describe "With valid params" do
-      describe "With an existing App having compnents and data stores" do
-        it "returns HTTP code 200:OK" do
-          pending
+      describe "With an existing App" do
+        it "returns HTTP code 200:OK", focused: true do
+          user = FactoryGirl.create(:valid_user)
         end
       end
 
