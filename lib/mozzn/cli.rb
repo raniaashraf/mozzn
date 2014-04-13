@@ -200,17 +200,40 @@ module Mozzn
       end
     end
 
-    desc 'instances AppName', 'To list all instances which a specific application use.'
-    def instances AppName = nil 
-      mozzn = Mozzn::Api.new
+    desc 'instances appname', 'To list all instances which a specific application use.'
+    def resources appname = nil
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      if !appname.present?
+        raise Thor::Error, "You must enter Application Name!"
+      end
       params = {
-        name: {
-          name: AppName
-        }
-        response = mozzn.post(:instances, params)
-        say "#{response['resources']}" :green
+        name: appname
       }
+      path = 'applications/resources'
+      begin
+      response = mozzn.get(path, params)
+        say response['info'], :green   
+      rescue JSON::ParserError => e
+        raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
+      end
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn. Check your internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
+    # desc 'instances AppName', 'To list all instances which a specific application use.'
+    
+    # def instances AppName = nil 
+    #   mozzn = Mozzn::Api.new
+    #   params = {
+    #     name: {
+    #       name: AppName
+    #     }
+    #     path = 'applications/resources'
+    #     response = mozzn.post(path, params)
+    #     say "#{response['resources']}" :green
+    #   }
+    # end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
