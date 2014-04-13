@@ -214,7 +214,10 @@ module Mozzn
       begin
       response = mozzn.get(path, params)
       table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
-        
+        response['resources'].each do |resource|
+          id = id.next
+          t.add_row [id, resource.name]
+        end
       end
       say "#{table}", :green 
         #TODO resources with the form 'name' => name , 'command' => command  
