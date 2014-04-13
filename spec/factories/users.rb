@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :valid_user, class CLI do
+  factory :valid_user, class: Cli do
     cli = Mozzn::Cli.new
     name = 'rania'
     email = unique_email
