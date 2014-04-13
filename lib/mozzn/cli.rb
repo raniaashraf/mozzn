@@ -213,6 +213,7 @@ module Mozzn
       path = 'applications/resources'
       begin
       response = mozzn.get(path, params)
+      say response['resources'], :red
       table = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
         response['resources'].each do |resource|
           t.add_row [resource['resources'], resource['resources']]
