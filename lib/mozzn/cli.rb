@@ -212,7 +212,7 @@ module Mozzn
       path = 'applications/resources'
       begin
       response = mozzn.get(path, params)
-        say response['resources'], :green   
+        say response['resources']['name'], :green   
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
       end
