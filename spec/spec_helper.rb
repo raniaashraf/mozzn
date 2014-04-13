@@ -1,5 +1,7 @@
 require 'bundler/setup'
 require 'rspec' 
+require 'factory_girl'
+
 
 Bundler.setup
 
