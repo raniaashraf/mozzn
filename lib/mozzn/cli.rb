@@ -134,7 +134,7 @@ module Mozzn
       params = {
         name: name
       }
-      path = 'applications'
+      path = 'applications/remove'
       begin
       response = mozzn.get(path, params)
         say response['info'], :green   
@@ -200,17 +200,17 @@ module Mozzn
       end
     end
 
-    desc 'instances AppName', 'To list all instances which a specific application use.'
-    def instances AppName = nil 
-      mozzn = Mozzn::Api.new
-      params = {
-        name: {
-          name: AppName
-        }
-        response = mozzn.post(:instances, params)
-        say "#{response['resources']}" :green
-      }
-    end
+    # desc 'instances AppName', 'To list all instances which a specific application use.'
+    # def instances AppName = nil 
+    #   mozzn = Mozzn::Api.new
+    #   params = {
+    #     name: {
+    #       name: AppName
+    #     }
+    #     response = mozzn.post(:instances, params)
+    #     say "#{response['resources']}" :green
+    #   }
+    # end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
