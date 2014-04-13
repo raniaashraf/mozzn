@@ -231,7 +231,9 @@ module Mozzn
           end
         end
       end
+      say "Processes"
       say "#{table1}"
+      say "Databases"
       say "#{table2}"
 
       rescue JSON::ParserError => e
