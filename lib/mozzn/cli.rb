@@ -212,39 +212,39 @@ module Mozzn
         name: appname
       }
       search_path = "applications/search"
-      # path = "applications/#{id}/resources"
       begin
       response = mozzn.get(search_path, params)
-      puts response['app_id']
-      # if response.has_key?('info')
-      #   raise Thor::Error, "#{response['info']}"
-      # else
+      id = response['app_id']
+      resources_path = "applications/#{id}/resources"
+      response = mozzn.get(resources_path)
+      if response.has_key?('info')
+        raise Thor::Error, "#{response['info']}"
+      else
       
-      #   table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
-      #     response['resources'].each do |resource|
-      #       key = (resource.has_key?('command') ? resource['name'] : nil)
-      #       value = (resource.has_key?('command') ? resource['command'] : nil)
-      #       if key.present?
-      #         t.add_row [key, value]
-      #       end
-      #     end
-      #   end
-      #   table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
-      #     response['resources'].each do |resource|
-      #       key = (resource.has_key?('role') ? resource['name'] : nil)
-      #       value = (resource.has_key?('role') ? resource['role'] : nil)
-      #       if key.present?
-      #         t.add_row [key, value]
-      #       end
-      #     end
-      #   end
-      #   say "Processes:"
-      #   say "#{table1}"
-      #   say "Databases:"
-      #   say "#{table2}" 
-      # end
-      
-      
+        table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+          response['resources'].each do |resource|
+            key = (resource.has_key?('command') ? resource['name'] : nil)
+            value = (resource.has_key?('command') ? resource['command'] : nil)
+            if key.present?
+              t.add_row [key, value]
+            end
+          end
+        end
+        table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
+          response['resources'].each do |resource|
+            key = (resource.has_key?('role') ? resource['name'] : nil)
+            value = (resource.has_key?('role') ? resource['role'] : nil)
+            if key.present?
+              t.add_row [key, value]
+            end
+          end
+        end
+        say "Processes:"
+        say "#{table1}"
+        say "Databases:"
+        say "#{table2}" 
+      end
+
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
       end
