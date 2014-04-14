@@ -214,28 +214,31 @@ module Mozzn
       search_path = "applications/search"
       begin
       response = mozzn.get(search_path, params)
-      id = response['app_id']
-      resources_path = "applications/#{id}/resources"
-      response = mozzn.get(resources_path, nil)
       if response.has_key?('info')
         raise Thor::Error, "#{response['info']}"
       else
-      
-        table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
-          response['resources'].each do |resource|
-            key = (resource.has_key?('command') ? resource['name'] : nil)
-            value = (resource.has_key?('command') ? resource['command'] : nil)
-            if key.present?
-              t.add_row [key, value]
+        id = response['app_id']
+        resources_path = "applications/#{id}/resources"
+        response = mozzn.get(resources_path,nil)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
+        else
+          table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+            response['resources'].each do |resource|
+              key = (resource.has_key?('command') ? resource['name'] : nil)
+              value = (resource.has_key?('command') ? resource['command'] : nil)
+              if key.present?
+                t.add_row [key, value]
+              end
             end
           end
-        end
-        table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
-          response['resources'].each do |resource|
-            key = (resource.has_key?('role') ? resource['name'] : nil)
-            value = (resource.has_key?('role') ? resource['role'] : nil)
-            if key.present?
-              t.add_row [key, value]
+          table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
+            response['resources'].each do |resource|
+              key = (resource.has_key?('role') ? resource['name'] : nil)
+              value = (resource.has_key?('role') ? resource['role'] : nil)
+              if key.present?
+                t.add_row [key, value]
+              end
             end
           end
         end
