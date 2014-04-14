@@ -211,7 +211,7 @@ module Mozzn
       params = {
         name: appname
       }
-      search_path = "application/search"
+      search_path = "applications/search"
       # path = "applications/#{id}/resources"
       begin
       response = mozzn.get(search_path, params)
