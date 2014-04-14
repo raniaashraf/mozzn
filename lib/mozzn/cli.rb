@@ -202,6 +202,7 @@ module Mozzn
     end
 
     desc 'instances appname', 'To list all instances which a specific application use.'
+    
     def resources appname = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if !appname.present?
@@ -210,32 +211,40 @@ module Mozzn
       params = {
         name: appname
       }
-      path = 'applications/resources'
+      search_path = "application/search"
+      # path = "applications/#{id}/resources"
       begin
-      response = mozzn.get(path, params)
-      table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
-        response['resources'].each do |resource|
-          key = (resource.has_key?('command') ? resource['name'] : nil)
-          value = (resource.has_key?('command') ? resource['command'] : nil)
-          if key.present?
-            t.add_row [key, value]
-          end
-        end
-      end
-      table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
-        response['resources'].each do |resource|
-          key = (resource.has_key?('role') ? resource['name'] : nil)
-          value = (resource.has_key?('role') ? resource['role'] : nil)
-          if key.present?
-            t.add_row [key, value]
-          end
-        end
-      end
-      say "Processes:"
-      say "#{table1}"
-      say "Databases:"
-      say "#{table2}"
-
+      response = mozzn.get(search_path, params)
+      puts response['app_id']
+      # if response.has_key?('info')
+      #   raise Thor::Error, "#{response['info']}"
+      # else
+      
+      #   table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+      #     response['resources'].each do |resource|
+      #       key = (resource.has_key?('command') ? resource['name'] : nil)
+      #       value = (resource.has_key?('command') ? resource['command'] : nil)
+      #       if key.present?
+      #         t.add_row [key, value]
+      #       end
+      #     end
+      #   end
+      #   table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
+      #     response['resources'].each do |resource|
+      #       key = (resource.has_key?('role') ? resource['name'] : nil)
+      #       value = (resource.has_key?('role') ? resource['role'] : nil)
+      #       if key.present?
+      #         t.add_row [key, value]
+      #       end
+      #     end
+      #   end
+      #   say "Processes:"
+      #   say "#{table1}"
+      #   say "Databases:"
+      #   say "#{table2}" 
+      # end
+      
+      
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
       end
@@ -243,7 +252,6 @@ module Mozzn
       say 'Unable to connect to Mozzn. Check your internet connection!', :red
     rescue Mozzn::UnexpectedOutput
       say 'UnexpectedOutput', :red
-    
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
