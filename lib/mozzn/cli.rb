@@ -216,7 +216,7 @@ module Mozzn
       response = mozzn.get(search_path, params)
       id = response['app_id']
       resources_path = "applications/#{id}/resources"
-      response = mozzn.get(resources_path)
+      response = mozzn.get(resources_path, nil)
       if response.has_key?('info')
         raise Thor::Error, "#{response['info']}"
       else
