@@ -251,8 +251,8 @@ module Mozzn
         end
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
-        # if response.has_key?('info')
-        #   raise Thor::Error, "#{response['info']}"
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
         # else
         #   table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
         #     response['instances'].each do |instant|
@@ -263,7 +263,7 @@ module Mozzn
         #       end
         #     end
         #   end
-        # end
+        end
         say "Processes:"
         say "#{table1}"
         say "Databases:"
