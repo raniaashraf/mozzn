@@ -257,7 +257,7 @@ module Mozzn
         else
           table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
             response['instances'].each do |instant|
-              # key = instant['body']['name']
+              key = instant['body']['name']
               # value = instant['body']['ip_address']
               # if key.present?
               #   t.add_row [key, value]
