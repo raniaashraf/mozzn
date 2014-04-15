@@ -251,7 +251,7 @@ module Mozzn
         end
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
-        say response['instances'].first['data'].inspect, :green
+        say response['instances'].first['data']['ip_address'].inspect, :green
         if response.has_key?('info')
           raise Thor::Error, "#{response['info']}"
         else
