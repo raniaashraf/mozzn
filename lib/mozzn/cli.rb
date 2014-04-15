@@ -282,6 +282,28 @@ module Mozzn
       say 'UnexpectedOutput', :red
     end
 
+    desc 'console', 'To start a console on your first web server'
+    def console appname = nil
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      if !appname.present?
+        raise Thor::Error, "You must enter Application Name!"
+      end
+      params = {
+        name: appname
+      }
+      search_path = "applications/search"
+      begin
+      response = mozzn.get(search_path, params)
+      if response.has_key?('info')
+        raise Thor::Error, "#{response['info']}"
+      else
+        id = response['app_id']
+        instances_path = "applications/#{id}/instances"
+        response = mozzn.get(instances_path,nil)
+        say response['data'].first.['ip_address'], :green
+      end
+    end
+
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
     def help command = nil
       puts 'Primary help topics, type "mozzn help COMMAND" for more details.'
