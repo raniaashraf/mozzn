@@ -251,13 +251,13 @@ module Mozzn
         end
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
-        say response['instances'].inspect, :green
+        say response['instances'].first['body'].inspect, :green
         if response.has_key?('info')
           raise Thor::Error, "#{response['info']}"
         else
           table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
             response['instances'].each do |instant|
-              key = instant['body']['name']
+              # key = instant['body']['name']
               # value = instant['body']['ip_address']
               # if key.present?
               #   t.add_row [key, value]
