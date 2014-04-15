@@ -249,8 +249,8 @@ module Mozzn
             end
           end
         end
-        # instances_path = "applications/#{id}/instances"
-        # response = mozzn.get(instances_path,nil)
+        instances_path = "applications/#{id}/instances"
+        response = mozzn.get(instances_path,nil)
         # if response.has_key?('info')
         #   raise Thor::Error, "#{response['info']}"
         # else
