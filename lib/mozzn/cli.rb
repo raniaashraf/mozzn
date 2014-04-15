@@ -269,8 +269,8 @@ module Mozzn
         say "#{table1}"
         say "Databases:"
         say "#{table2}"
-        # say "Instances:"
-        # say "#{table3}"  
+        say "Instances:"
+        say "#{table3}"  
       end
 
       rescue JSON::ParserError => e
