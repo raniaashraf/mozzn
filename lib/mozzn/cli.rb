@@ -303,7 +303,7 @@ module Mozzn
         ip_address = response['instances'].first['data']['ip_address']
         # say ip_address, :green
         exec( "echo #{ip_address}" )
-        $?.exitstatus
+        say $?.exitstatus, :green
       end
     end
 
