@@ -255,7 +255,7 @@ module Mozzn
         if response.has_key?('info')
           raise Thor::Error, "#{response['info']}"
         else
-          table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
+          table3 = Terminal::Table.new(headings: ['Name', 'IP']) do |t|
             response['instances'].each do |instant|
               key = instant['data']['name']
               value = instant['data']['ip_address']
