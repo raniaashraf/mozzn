@@ -301,8 +301,7 @@ module Mozzn
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
         ip_address = response['instances'].first['data']['ip_address']
-        # say ip_address, :green
-        system( "echo #{ip_address}" )
+        system( "ssh app@#{ip_address}" )
         say $?.exitstatus, :green
       end
     end
