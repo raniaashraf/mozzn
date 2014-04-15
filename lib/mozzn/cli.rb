@@ -302,7 +302,7 @@ module Mozzn
         response = mozzn.get(instances_path,nil)
         ip_address = response['instances'].first['data']['ip_address']
         # say ip_address, :green
-        exec( "echo ip_address" )
+        `echo 'hiii'`
       end
     end
 
