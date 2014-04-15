@@ -254,16 +254,16 @@ module Mozzn
         say response['instances'].inspect, :green
         if response.has_key?('info')
           raise Thor::Error, "#{response['info']}"
-        # else
-        #   table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
-        #     response['instances'].each do |instant|
-        #       key = instant['body']['name']
-        #       value = instant['body']['ip_address']
-        #       if key.present?
-        #         t.add_row [key, value]
-        #       end
-        #     end
-          # end
+        else
+          table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
+            response['instances'].each do |instant|
+              # key = instant['body']['name']
+              # value = instant['body']['ip_address']
+              # if key.present?
+              #   t.add_row [key, value]
+              # end
+            end
+          end
         end
         say "Processes:"
         say "#{table1}"
