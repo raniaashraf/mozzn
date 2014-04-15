@@ -292,7 +292,7 @@ module Mozzn
         name: appname
       }
       search_path = "applications/search"
-      begin
+      
       response = mozzn.get(search_path, params)
       if response.has_key?('info')
         raise Thor::Error, "#{response['info']}"
