@@ -301,7 +301,8 @@ module Mozzn
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
         ip_address = response['instances'].first['data']['ip_address']
-        say ip_address, :green
+        # say ip_address, :green
+        `echo ip_address`
       end
     end
 
