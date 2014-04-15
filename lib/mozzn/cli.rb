@@ -300,7 +300,7 @@ module Mozzn
         id = response['app_id']
         instances_path = "applications/#{id}/instances"
         response = mozzn.get(instances_path,nil)
-        ip_address = response['data'].first['ip_address']
+        ip_address = response['instances'].first['data']['ip_address']
         say ip_address, :green
       end
     end
