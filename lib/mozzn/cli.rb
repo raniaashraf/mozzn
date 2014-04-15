@@ -208,7 +208,7 @@ module Mozzn
       end
     end
 
-    desc 'instances appname', 'To list all instances which a specific application use.'
+    desc 'resources appname', 'To list all instances which a specific application use.'
     
     def resources appname = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
@@ -249,10 +249,27 @@ module Mozzn
             end
           end
         end
+        instances_path = "applications/#{id}/instances"
+        response = mozzn.get(instances_path,nil)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
+        else
+          table3 = Terminal::Table.new(headings: ['Id', 'IP']) do |t|
+            response['instances'].each do |instant|
+              key = instant['body']['name']
+              value = instant['body']['ip_address']
+              if key.present?
+                t.add_row [key, value]
+              end
+            end
+          end
+        end
         say "Processes:"
         say "#{table1}"
         say "Databases:"
-        say "#{table2}" 
+        say "#{table2}"
+        say "Instances:"
+        say "#{table3}"  
       end
 
       rescue JSON::ParserError => e
