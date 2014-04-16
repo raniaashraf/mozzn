@@ -289,7 +289,7 @@ module Mozzn
       end 
       url = @data.scan /url =.*/
       app = url.to_s.scan(/:.*/) 
-      x, y = app.split('.') 
+      x, y = app.to_s.split('.') 
       say x, :green
       say y, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
