@@ -289,8 +289,8 @@ module Mozzn
       end 
       url = @data.scan /url =.*/
       app = url.to_s.scan(/:.*/) 
-      appname = app.to_s.split('.')
-      say appname.first.to_s, :green
+      appname = app.to_s.split('.')[1..-1]
+      say appname.to_s, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
     #     raise Thor::Error, "You must enter Application Name!"
