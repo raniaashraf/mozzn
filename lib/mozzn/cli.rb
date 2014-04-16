@@ -285,9 +285,15 @@ module Mozzn
     desc 'console', 'To start a console on your first web server'
     method_option :name, :aliases => "-c", :desc => "Command to be run in console."
     def console 
-      File.open(".git/config", "r") do |f|
-        @data = f.read
-      end 
+      config_file_path = ".git/config"
+      if File.exists?(config_file_path)
+        File.open(config_file_path, "r") do |f|
+          @data = f.read
+        end
+      else
+        raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
+      end
+       
       url = @data.scan /url =.*/
       app = url.first.split(":")[1] 
       appname = app.split('.').first
