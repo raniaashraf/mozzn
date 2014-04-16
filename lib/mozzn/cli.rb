@@ -291,7 +291,7 @@ module Mozzn
           @data = f.read
         end
       else
-        raise Thor::Error,"You do not have an application with the name . Please check the application name."
+        raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
       end
        
       url = @data.scan /url =.*/
@@ -319,7 +319,7 @@ module Mozzn
           status = $?.exitstatus
         end
       rescue JSON::ParserError => e
-        raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
+        raise Thor::Error,"You do not have an application with the name #{params[:name]}. Please check the application name."
       end
     rescue Mozzn::Disconnected
       say 'Unable to connect to Mozzn. Check your internet connection!', :red
