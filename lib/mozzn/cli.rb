@@ -287,8 +287,9 @@ module Mozzn
       File.open(".git/config", "r") do |f|
         @data = f.read
       end 
-      words = @data.scan /url =.*/
-      say words, :green
+      url = @data.scan /url =.*/
+      app = url.scan(/:.*/) 
+      say app, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
     #     raise Thor::Error, "You must enter Application Name!"
