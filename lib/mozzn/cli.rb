@@ -284,7 +284,7 @@ module Mozzn
 
     desc 'console', 'To start a console on your first web server'
     def console 
-      File.open("cat .git/config", "r") do |f|
+      File.open(".git/config", "r") do |f|
         data = f.read
       end
       
