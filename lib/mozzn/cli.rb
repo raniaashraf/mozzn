@@ -289,7 +289,7 @@ module Mozzn
       end 
       url = @data.scan /url =.*/
       app = url.to_s.scan(/:.*/) 
-      x = app.slice! ".git"
+      x = app.to_s.slice! ".git"
       say x, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
