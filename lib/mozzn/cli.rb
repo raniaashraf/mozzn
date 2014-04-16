@@ -287,7 +287,7 @@ module Mozzn
       File.open(".git/config", "r") do |f|
         @data = f.read
       end 
-      words = @data.to_json
+      words = @data.to_json['url']
       say words, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
