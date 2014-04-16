@@ -285,6 +285,8 @@ module Mozzn
     desc 'console', 'To start a console on your first web server'
     def console appname = nil
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      name = Rails.application.class.parent_name
+        say name, :green
       if !appname.present?
         raise Thor::Error, "You must enter Application Name!"
       end
@@ -304,8 +306,6 @@ module Mozzn
           system( "ssh app@#{ip_address}" )
           say $?.exitstatus, :green
         end
-        name = Rails.application.class.parent_name
-        say name, :green
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
       end
