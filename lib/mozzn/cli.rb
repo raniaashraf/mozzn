@@ -289,7 +289,7 @@ module Mozzn
       end 
       url = @data.scan /url =.*/
       app = url.to_s.scan(/:.*/) 
-      appname = app.to_s.split(' ')[1..-1]
+      appname = app.to_s.split(' ')[1..-1].join(' ')
       say appname.to_s, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
