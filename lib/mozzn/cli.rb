@@ -283,6 +283,7 @@ module Mozzn
     end
 
     desc 'console', 'To start a console on your first web server'
+    method_option :name, :aliases => "-c", :desc => "Command to be run in console."
     def console 
       File.open(".git/config", "r") do |f|
         @data = f.read
@@ -304,8 +305,12 @@ module Mozzn
           instances_path = "applications/#{id}/instances"
           response = mozzn.get(instances_path,nil)
           ip_address = response['instances'].first['data']['ip_address']
-          system( "ssh app@#{ip_address}" )
-          say $?.exitstatus, :green
+          if options[:command].present?
+            system( "ssh app@#{ip_address} #{options[:command]}" )
+          else
+            system( "ssh app@#{ip_address}")
+          end
+          status = $?.exitstatus
         end
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
