@@ -285,9 +285,9 @@ module Mozzn
     desc 'console', 'To start a console on your first web server'
     def console 
       File.open(".git/config", "r") do |f|
-        data = f.read
+        @data = f.read
       end
-      say data, :green 
+      say @data, :green 
       
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
