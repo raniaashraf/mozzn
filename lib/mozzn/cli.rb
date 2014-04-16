@@ -287,7 +287,7 @@ module Mozzn
       File.open(".git/config", "r") do |f|
         @data = f.read
       end 
-      words = @data.split(/\W+/)
+      words = @data.index('.git')
       say words, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
