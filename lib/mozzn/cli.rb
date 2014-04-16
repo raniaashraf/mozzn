@@ -288,8 +288,7 @@ module Mozzn
         @data = f.read
       end 
       words = @data.to_json
-
-      say @data.to_json.has_key?('url'), :green
+      say words, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
     #     raise Thor::Error, "You must enter Application Name!"
