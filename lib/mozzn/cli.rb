@@ -290,35 +290,30 @@ module Mozzn
       url = @data.scan /url =.*/
       app = url.first.split(":")[1] 
       appname = app.split('.').first
-
-      say appname, :green
-      # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-    #   if !appname.present?
-    #     raise Thor::Error, "You must enter Application Name!"
-    #   end
-    #   params = {
-    #     name: appname
-    #   }
-    #   search_path = "applications/search"
-    #   begin
-    #     response = mozzn.get(search_path, params)
-    #     if response.has_key?('info')
-    #       raise Thor::Error, "#{response['info']}"
-    #     else
-    #       id = response['app_id']
-    #       instances_path = "applications/#{id}/instances"
-    #       response = mozzn.get(instances_path,nil)
-    #       ip_address = response['instances'].first['data']['ip_address']
-    #       system( "ssh app@#{ip_address}" )
-    #       say $?.exitstatus, :green
-    #     end
-    #   rescue JSON::ParserError => e
-    #     raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
-    #   end
-    # rescue Mozzn::Disconnected
-    #   say 'Unable to connect to Mozzn. Check your internet connection!', :red
-    # rescue Mozzn::UnexpectedOutput
-    #   say 'UnexpectedOutput', :red
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      params = {
+        name: appname
+      }
+      search_path = "applications/search"
+      begin
+        response = mozzn.get(search_path, params)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
+        else
+          id = response['app_id']
+          instances_path = "applications/#{id}/instances"
+          response = mozzn.get(instances_path,nil)
+          ip_address = response['instances'].first['data']['ip_address']
+          system( "ssh app@#{ip_address}" )
+          say $?.exitstatus, :green
+        end
+      rescue JSON::ParserError => e
+        raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
+      end
+    rescue Mozzn::Disconnected
+      say 'Unable to connect to Mozzn. Check your internet connection!', :red
+    rescue Mozzn::UnexpectedOutput
+      say 'UnexpectedOutput', :red
     end
 
     desc 'help COMMAND', 'For more infromation about spicific COMMAND'
