@@ -289,7 +289,7 @@ module Mozzn
       end 
       url = @data.scan /url =.*/
       app = url.to_s.scan(/:.*/) 
-      app = app.gsub(/\[:"/,"")
+      app = app.to_s.gsub(/\[:"/,"")
       appname = app.to_s.split('.')
 
       say appname[0], :green
