@@ -284,7 +284,7 @@ module Mozzn
 
     desc 'console', 'To start a console on your first web server'
     def console 
-      system("cat /.git/config")
+      system("cd /.git; cat config")
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
     #     raise Thor::Error, "You must enter Application Name!"
