@@ -286,9 +286,9 @@ module Mozzn
     def console 
       File.open(".git/config", "r") do |f|
         @data = f.read
-      end
-      say @data, :green 
-      
+      end 
+      words = @data.split(/\W+/)
+      say words, :green
       # mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     #   if !appname.present?
     #     raise Thor::Error, "You must enter Application Name!"
