@@ -304,6 +304,8 @@ module Mozzn
           system( "ssh app@#{ip_address}" )
           say $?.exitstatus, :green
         end
+        name = Rails.application.class.parent_name
+        say name, :green
       rescue JSON::ParserError => e
         raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
       end
