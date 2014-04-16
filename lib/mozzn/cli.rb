@@ -291,7 +291,7 @@ module Mozzn
           @data = f.read
         end
       else
-        raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
+        raise Thor::Error,"You do not have an application with the name . Please check the application name."
       end
        
       url = @data.scan /url =.*/
