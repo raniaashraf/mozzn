@@ -42,7 +42,6 @@ module Mozzn
       end
 
       desc 'remove APPNAME', 'Remove spcicfic Application'
-
       def remove name = nil
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if !name.present?
@@ -73,7 +72,7 @@ module Mozzn
       desc "list", "List all your Applications."
 
       def list
-        
+      #TODO  
       end
 
       desc 'resources APPNAME', 'To list all instances which a specific application use'
@@ -181,9 +180,8 @@ module Mozzn
       rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end 
-    end
     no_commands do
-      desc 'git_check', 'checks if user has git installed in $PATH or not'
+      # desc 'git_check', 'checks if user has git installed in $PATH or not'
       def appname
         config_file_path = ".git/config"
         if File.exists?(config_file_path)
@@ -199,4 +197,7 @@ module Mozzn
       end
     end
   end
+end
+
+
 end
