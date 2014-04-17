@@ -5,7 +5,7 @@ require 'rubygems'
 require 'git'
 require 'mozzn/version'
 require 'terminal-table'
-require "mozzn/key"
+require "mozzn/commands/key"
 
 module Mozzn
   class Cli < Thor
