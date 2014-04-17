@@ -57,7 +57,7 @@ module Mozzn
     method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
-    class Add < thor
+    class Add < Thor
       def key 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options[:key_path].present?
