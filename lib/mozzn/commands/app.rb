@@ -145,7 +145,7 @@ module Mozzn
 
         rescue JSON::ParserError => e
           raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
-        end
+        # end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn. Check your internet connection!', :red
       rescue Mozzn::UnexpectedOutput
