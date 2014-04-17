@@ -81,8 +81,6 @@ module Mozzn
       method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'resources', 'To list all instances which application use'
       def resources 
-        puts Mozzn::Config.new.read['token']
-
         begin
           mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         rescue Mozzn::UnexpectedOutput => e
