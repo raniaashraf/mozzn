@@ -57,8 +57,9 @@ module Mozzn
     method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
     method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
     # mozzn add_key
+    namespace       "talk"
     def key
-      namespace       "talk"
+      
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       if options[:key_path].present?
         key_path = File.expand_path(options[:key_path])
