@@ -13,7 +13,7 @@ module Mozzn
   class Cli < Thor
     include Thor::Actions
     
-    trap(:INT) { exit 1 }
+    trap(:INT) { puts 'Exiting...'; exit 1 }
     
     default_task :help
 
