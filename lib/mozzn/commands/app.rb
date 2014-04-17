@@ -152,18 +152,6 @@ module Mozzn
     desc 'console', 'To start a console on your first web server'
     method_option :name, :aliases => "-c", :desc => "Command to be run in console."
     def console 
-      config_file_path = ".git/config"
-      if File.exists?(config_file_path)
-        File.open(config_file_path, "r") do |f|
-          @data = f.read
-        end
-      else
-        raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
-      end
-       
-      url = @data.scan /url =.*/
-      app = url.first.split(":")[1] 
-      appname = app.split('.').first
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       params = {
         name: appname
@@ -193,6 +181,22 @@ module Mozzn
       rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end 
+    end
+    no_commands do
+      desc 'git_check', 'checks if user has git installed in $PATH or not'
+      def appname
+        config_file_path = ".git/config"
+        if File.exists?(config_file_path)
+          File.open(config_file_path, "r") do |f|
+            @data = f.read
+          end
+        else
+          raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
+        end
+        url = @data.scan /url =.*/
+        app = url.first.split(":")[1] 
+        appname = app.split('.').first
+      end
     end
   end
 end
