@@ -36,13 +36,13 @@ module Mozzn
       super command
     end
 
-    desc "key subcommand", "Manage SSH keys"
+    desc "key SUBCOMMAND", "Manage SSH keys"
     subcommand "key", Mozzn::Commands::Key
 
-    desc "app subcommand", "Manage applications"
+    desc "app SUBCOMMAND", "Manage applications"
     subcommand "app", Mozzn::Commands::App
 
-    desc "auth subcommand", "Manage your accountUser registration and login"
+    desc "auth SUBCOMMAND", "Manage your accountUser registration and login"
     subcommand "auth", Mozzn::Commands::Auth
   end  
 end
