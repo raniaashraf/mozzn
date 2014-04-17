@@ -16,7 +16,6 @@ module Mozzn
           }
         }
         response = mozzn.post(path, params)
-        puts response['info'] , response['message']
         if response.has_key?('message')
           raise Thor::Error, "#{response['message']}"
         else
