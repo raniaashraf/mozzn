@@ -5,6 +5,11 @@ module Mozzn
       desc 'create APPNAME', 'create a new application'
 
       def create name = nil
+        begin
+          mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        rescue Mozzn::UnexpectedOutput => e
+          say 'You need to login in order to continue.', :red
+        end
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if name == nil
           raise Thor::Error, "You must enter application name."
