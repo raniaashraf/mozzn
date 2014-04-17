@@ -1,3 +1,4 @@
+ENV['GEM_ENV'] = 'test'
 require 'bundler/setup'
 require 'rspec' 
 require "mozzn"
