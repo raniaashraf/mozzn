@@ -1,7 +1,7 @@
 module Mozzn
   module Commands
     class Auth < Thor
-      desc 'register', 'Create an account on mozzn.'
+      desc 'register', 'Create an account on mozzn'
       
       method_option :name, :aliases => "-n", :desc => "Username."
       method_option :email, :aliases => "-u", :desc => "User email used to login."

@@ -9,15 +9,13 @@ require "mozzn/commands/key"
 require "mozzn/commands/app"
 require "mozzn/commands/auth"
 
-trap(:INT) { puts 'Exiting...'; exit 1 }
-
 module Mozzn
   class Cli < Thor
     include Thor::Actions
     
     default_task :help
 
-    desc 'update', 'To show if there is an update for the CLI'
+    desc 'update', 'Check for updates'
     def update
       # TODO after gem release https://rubygems.org/api/v1/versions/mozzn.json
       @connection = Faraday.new('https://rubygems.org/api/v1/versions/coulda.json')
@@ -38,13 +36,13 @@ module Mozzn
       super command
     end
 
-    desc "Key subcommand", "List, add and remove keys."
+    desc "key subcommand", "Manage SSH keys"
     subcommand "key", Mozzn::Commands::Key
 
-    desc "App subcommand", "List, add and remove applications."
+    desc "app subcommand", "Manage applications"
     subcommand "app", Mozzn::Commands::App
 
-    desc "Auth subcommand", "User registration and login."
+    desc "auth subcommand", "Manage your accountUser registration and login"
     subcommand "auth", Mozzn::Commands::Auth
   end  
 end

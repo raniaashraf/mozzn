@@ -41,7 +41,7 @@ module Mozzn
         say 'UnexpectedOutput', :red
       end
 
-      desc 'remove APPNAME', 'Remove spcicfic Application.'
+      desc 'remove APPNAME', 'Remove spcicfic Application'
 
       def remove name = nil
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
@@ -76,7 +76,7 @@ module Mozzn
         
       end
 
-      desc 'resources appname', 'To list all instances which a specific application use.'
+      desc 'resources APPNAME', 'To list all instances which a specific application use'
       def resources appname = nil
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if !appname.present?
