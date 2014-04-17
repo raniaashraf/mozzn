@@ -1,6 +1,7 @@
 class App < Thor
+
   desc 'create APPNAME', 'create a new application'
-  # mozzn create_app
+
   def create name = nil
     mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
     if name == nil
@@ -62,5 +63,10 @@ class App < Thor
     say 'Unable to connect to Mozzn. Check your internet connection!', :red
     rescue Mozzn::UnexpectedOutput
     say 'UnexpectedOutput', :red
+  end
+  desc "list", "List all your Applications."
+
+  def list
+    
   end
 end
