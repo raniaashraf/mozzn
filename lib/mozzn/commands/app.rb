@@ -16,26 +16,26 @@ module Mozzn
           }
         }
         response = mozzn.post(path, params)
-        puts response['info'] ,response['message']
-        # if response.has_key?('message')
-        #   raise Thor::Error, "#{response['message']}"
-        # else
-        #   say response['info'], :green
-        #   git = Git.init
-        #   unless File.exist?('.git')
-        #       git.add(all: true)
-        #     begin
-        #       git.commit('First commit')
-        #     rescue Git::GitExecuteError => e
-        #       # Do nothing
-        #     end
-        #   end
-        #   begin
-        #     git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
-        #   rescue Git::GitExecuteError => e
-        #     say 'Git remote already configured, skipping...'
-        #   end
-        # end
+        puts response['info'] , response['message']
+        if response.has_key?('message')
+          raise Thor::Error, "#{response['message']}"
+        else
+          say response['info'], :green
+          git = Git.init
+          unless File.exist?('.git')
+              git.add(all: true)
+            begin
+              git.commit('First commit')
+            rescue Git::GitExecuteError => e
+              # Do nothing
+            end
+          end
+          begin
+            git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
+          rescue Git::GitExecuteError => e
+            say 'Git remote already configured, skipping...'
+          end
+        end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn check the internet connection!', :red
       rescue Mozzn::UnexpectedOutput
