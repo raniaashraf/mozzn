@@ -29,12 +29,12 @@ module Mozzn
         begin
           git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
         rescue Git::GitExecuteError => e
-          say 'You already have this remote.', :red
+          say 'Git remote already configured, skipping...'
         end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn check the internet connection!', :red
       rescue Mozzn::UnexpectedOutput
-        say 'UnexpectedOutput'
+        say 'UnexpectedOutput', :red
       end
 
       desc 'remove APPNAME', 'Remove spcicfic Application.'
