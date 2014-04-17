@@ -83,69 +83,67 @@ module Mozzn
           name = options['appname']
         else
           name = appname
-          puts name
-        # end
-        # params = {
-        #   name: name
-        # }
-        # search_path = "applications/search"
-        # begin
-        # response = mozzn.get(search_path, params)
-        # if response.has_key?('info')
-        #   raise Thor::Error, "#{response['info']}"
-        # else
-        #   id = response['app_id']
-        #   resources_path = "applications/#{id}/resources"
-        #   response = mozzn.get(resources_path,nil)
-        #   if response.has_key?('info')
-        #     raise Thor::Error, "#{response['info']}"
-        #   else
-        #     table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
-        #       response['resources'].each do |resource|
-        #         key = (resource.has_key?('command') ? resource['name'] : nil)
-        #         value = (resource.has_key?('command') ? resource['command'] : nil)
-        #         if key.present?
-        #           t.add_row [key, value]
-        #         end
-        #       end
-        #     end
-        #     table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
-        #       response['resources'].each do |resource|
-        #         key = (resource.has_key?('role') ? resource['name'] : nil)
-        #         value = (resource.has_key?('role') ? resource['role'] : nil)
-        #         if key.present?
-        #           t.add_row [key, value]
-        #         end
-        #       end
-        #     end
-        #   end
-        #   instances_path = "applications/#{id}/instances"
-        #   response = mozzn.get(instances_path,nil)
-        #   # say response['instances'].first['data']['ip_address'].inspect, :green
-        #   if response.has_key?('info')
-        #     raise Thor::Error, "#{response['info']}"
-        #   else
-        #     table3 = Terminal::Table.new(headings: ['Name', 'IP']) do |t|
-        #       response['instances'].each do |instant|
-        #         key = instant['data']['name']
-        #         value = instant['data']['ip_address']
-        #         if key.present?
-        #           t.add_row [key, value]
-        #         end
-        #       end
-        #     end
-        #   end
-        #   say "Processes:"
-        #   say "#{table1}"
-        #   say "Databases:"
-        #   say "#{table2}"
-        #   say "Instances:"
-        #   say "#{table3}"  
+        end
+        params = {
+          name: name
+        }
+        search_path = "applications/search"
+        begin
+        response = mozzn.get(search_path, params)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
+        else
+          id = response['app_id']
+          resources_path = "applications/#{id}/resources"
+          response = mozzn.get(resources_path,nil)
+          if response.has_key?('info')
+            raise Thor::Error, "#{response['info']}"
+          else
+            table1 = Terminal::Table.new(headings: ['Process', 'Command']) do |t|
+              response['resources'].each do |resource|
+                key = (resource.has_key?('command') ? resource['name'] : nil)
+                value = (resource.has_key?('command') ? resource['command'] : nil)
+                if key.present?
+                  t.add_row [key, value]
+                end
+              end
+            end
+            table2 = Terminal::Table.new(headings: ['Database', 'Role']) do |t|
+              response['resources'].each do |resource|
+                key = (resource.has_key?('role') ? resource['name'] : nil)
+                value = (resource.has_key?('role') ? resource['role'] : nil)
+                if key.present?
+                  t.add_row [key, value]
+                end
+              end
+            end
+          end
+          instances_path = "applications/#{id}/instances"
+          response = mozzn.get(instances_path,nil)
+          if response.has_key?('info')
+            raise Thor::Error, "#{response['info']}"
+          else
+            table3 = Terminal::Table.new(headings: ['Name', 'IP']) do |t|
+              response['instances'].each do |instant|
+                key = instant['data']['name']
+                value = instant['data']['ip_address']
+                if key.present?
+                  t.add_row [key, value]
+                end
+              end
+            end
+          end
+          say "Processes:"
+          say "#{table1}"
+          say "Databases:"
+          say "#{table2}"
+          say "Instances:"
+          say "#{table3}"  
         end
 
         rescue JSON::ParserError => e
           raise Thor::Error,"You do not have an application with the name #{params[:appname]}. Please check the application name."
-        # end
+        end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn. Check your internet connection!', :red
       rescue Mozzn::UnexpectedOutput
