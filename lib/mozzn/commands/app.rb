@@ -83,7 +83,7 @@ module Mozzn
       def resources 
         # begin
           mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-          puts mozzn 
+          puts Mozzn::Config.new.read['token'] 
         # rescue Mozzn::UnexpectedOutput => e
         #   say 'You need to login in order to continue.', :red
         # end
