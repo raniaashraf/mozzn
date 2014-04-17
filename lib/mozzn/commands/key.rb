@@ -5,6 +5,10 @@ module Mozzn
       method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
       method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
       def add
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
+        end
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options[:key_path].present?
           key_path = File.expand_path(options[:key_path])
@@ -40,12 +44,12 @@ module Mozzn
 
       desc 'destroy', 'Delete specific SSH public Key.'
       def destroy
-        
+        # TODO
       end
 
       desc 'list', 'List all your SSH public keys.'
       def list
-        
+        # TODO
       end
     end
   end

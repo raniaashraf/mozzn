@@ -5,6 +5,10 @@ module Mozzn
       desc 'create APPNAME', 'create a new application'
 
       def create name = nil
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
+        end
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if name == nil
           raise Thor::Error, "You must enter application name."
@@ -44,6 +48,10 @@ module Mozzn
       method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'destroy ', 'Remove spcicfic Application'
       def destroy 
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
+        end
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options['appname'].present?
           name = options['appname']
@@ -160,6 +168,10 @@ module Mozzn
     desc 'console', 'To start a console on your first web server'
     method_option :name, :aliases => "-c", :desc => "Command to be run in console."
     def console 
+      token = Mozzn::Config.new.read['token']
+      if token.nil?
+        raise Thor::Error,"You need to login in order to continue."
+      end
       mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
       params = {
         name: appname

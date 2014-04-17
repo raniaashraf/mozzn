@@ -29,36 +29,14 @@ describe Mozzn::Commands::App do
   describe "mozzn resources" do
     describe "With valid params" do
       describe "With an existing App" do
-        it "returns No assigned resources for this application.", focused: true do
-          capture(:stdout) { valid_user }
-          name = valid_app
-          @app.options = {
-          appname: name
-          }
-          expect { @app.resources }.to raise_error(Thor::Error, "No assigned resources for this application.")
-        end
-      end
-
-      describe "With an existing App having compnents and no datastores" do
-        it "returns HTTP code 200:OK" do
-          pending
-        end
-      end
-    
-      describe "With an existing App having datastores and no components" do
-        it "returns HTTP code 200:OK" do
-          pending
+        it "returns No assigned resources for this application." do
+          pending  
         end
       end
 
       describe "With an existing App having no datastores or components" do
-        it "returns No assigned resources for this application.", focused: true do
-          capture(:stdout) { valid_user }
-          name = valid_app
-          @app.options = {
-          appname: name
-          }
-          expect { @app.resources }.to raise_error(Thor::Error, "No assigned resources for this application.") 
+        it "returns No assigned resources for this application." do
+          pending  
         end
       end
     end
@@ -66,6 +44,16 @@ describe Mozzn::Commands::App do
       describe "with unauthorized user" do
         it "returns HTTP code 422" do
           pending
+        end
+      end
+
+      describe "With not existing App" do
+        it "returns Application not found" do
+          name = 'not_existing_app'
+          @app.options = {
+          appname: name
+          }
+          expect { @app.resources }.to raise_error(Thor::Error, "Application was not found")
         end
       end
     end
