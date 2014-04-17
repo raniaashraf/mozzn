@@ -2,6 +2,9 @@ ENV['GEM_ENV'] = 'test'
 require 'bundler/setup'
 require 'rspec' 
 require "mozzn"
+require "mozzn/commands/app"
+require "mozzn/commands/key"
+require "mozzn/commands/auth"
 
 Bundler.setup
 
@@ -35,18 +38,18 @@ def capture(stream)
 end
 
 def valid_user
-  cli = Mozzn::Cli.new
-  cli.options = {
-    email:'test@mozzn.com',
-    password: '12345678'
-  } 
-  cli.login
+  auth = Mozzn::Commands::Auth.new
+    auth.options = {
+      email:'test@mozzn.com',
+      password: '12345678'
+    } 
+    auth.login  
 end
 
 def valid_app
-  cli = Mozzn::Cli.new
+  app = Mozzn::Commands::App.new
   app_name = unique_name
-  capture(:stdout) { cli.create_app "#{app_name}"}
+  capture(:stdout) { app.create "#{app_name}"}
   app_name
 end
 

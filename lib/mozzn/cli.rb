@@ -39,12 +39,12 @@ module Mozzn
     end
 
     desc "Key subcommand", "List, add and remove keys."
-    subcommand "key", Key
+    subcommand "key", Mozzn::Commands::Key
 
     desc "App subcommand", "List, add and remove applications."
-    subcommand "app", App
+    subcommand "app", Mozzn::Commands::App
 
     desc "Auth subcommand", "User registration and login."
-    subcommand "auth", Auth
+    subcommand "auth", Mozzn::Commands::Auth
   end  
 end
