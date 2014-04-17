@@ -5,11 +5,6 @@ module Mozzn
       desc 'create APPNAME', 'create a new application'
 
       def create name = nil
-        begin
-          mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-        rescue Mozzn::UnexpectedOutput => e
-          say 'You need to login in order to continue.', :red
-        end
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if name == nil
           raise Thor::Error, "You must enter application name."
@@ -42,8 +37,8 @@ module Mozzn
         end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn check the internet connection!', :red
-      # rescue Mozzn::UnexpectedOutput
-      #   say 'UnexpectedOutput', :red
+      rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
@@ -86,7 +81,11 @@ module Mozzn
       method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'resources', 'To list all instances which application use'
       def resources 
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        begin
+          mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        rescue Mozzn::UnexpectedOutput => e
+          say 'You need to login in order to continue.', :red
+        end
         if options['appname'].present?
           name = options['appname']
         else
