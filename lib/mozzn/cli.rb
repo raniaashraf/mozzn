@@ -6,6 +6,7 @@ require 'git'
 require 'mozzn/version'
 require 'terminal-table'
 require "mozzn/commands/key"
+require "mozzn/commands/app"
 
 module Mozzn
   class Cli < Thor
