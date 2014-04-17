@@ -53,7 +53,7 @@ module Mozzn
     end
 
     # mozzn add_key
-    class Add 
+    class Add < Thor
       desc 'add_key', 'Add your SSH Public Key directily or add its path'
       method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
       method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
