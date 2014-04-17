@@ -9,7 +9,7 @@ require 'terminal-table'
 module Mozzn
   class Cli < Thor
     include Thor::Actions
-    
+    namespace :foo
     trap(:INT) { exit 1 }
     
     default_task :help
