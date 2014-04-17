@@ -194,6 +194,5 @@ module Mozzn
         say 'UnexpectedOutput', :red
       end 
     end
-    
   end
 end
