@@ -42,8 +42,8 @@ module Mozzn
         end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn check the internet connection!', :red
-      rescue Mozzn::UnexpectedOutput
-        say 'UnexpectedOutput', :red
+      # rescue Mozzn::UnexpectedOutput
+      #   say 'UnexpectedOutput', :red
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
