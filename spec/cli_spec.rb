@@ -309,7 +309,7 @@ describe Mozzn::Cli do
         it "Rais error 'Application not found'" do
           capture(:stdout) { valid_user }
           appname = 'AppName'
-          expect { @cli.resources "#{appname}" }.to raise_error(Thor::Error, "Application does not found")
+          expect { @cli.resources "#{appname}" }.to raise_error(Thor::Error, "Application was not found")
         end
       end
 
