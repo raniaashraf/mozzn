@@ -150,8 +150,42 @@ module Mozzn
       end
 
     desc 'console', 'To start a console on your first web server'
-      method_option :name, :aliases => "-c", :desc => "Command to be run in console."
-      def console 
+    method_option :name, :aliases => "-c", :desc => "Command to be run in console."
+    def console 
+      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      params = {
+        name: appname
+      }
+      search_path = "applications/search"
+      begin
+        response = mozzn.get(search_path, params)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}"
+        else
+          id = response['app_id']
+          instances_path = "applications/#{id}/instances"
+          response = mozzn.get(instances_path,nil)
+          ip_address = response['instances'].first['data']['ip_address']
+          if options[:command].present?
+            system( "ssh app@#{ip_address} #{options[:command]}" )
+          else
+            system( "ssh app@#{ip_address}")
+          end
+          status = $?.exitstatus
+        end
+      rescue JSON::ParserError => e
+        raise Thor::Error,"You do not have an application with the name #{params[:name]}. Please check the application name."
+      end
+      rescue Mozzn::Disconnected
+        say 'Unable to connect to Mozzn. Check your internet connection!', :red
+      rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
+      end 
+    end
+
+    no_commands do
+      desc "appname","Get application name"
+      def appname
         config_file_path = ".git/config"
         if File.exists?(config_file_path)
           File.open(config_file_path, "r") do |f|
@@ -159,40 +193,11 @@ module Mozzn
           end
         else
           raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
-        end
-         
+        end 
         url = @data.scan /url =.*/
         app = url.first.split(":")[1] 
         appname = app.split('.').first
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-        params = {
-          name: appname
-        }
-        search_path = "applications/search"
-        begin
-          response = mozzn.get(search_path, params)
-          if response.has_key?('info')
-            raise Thor::Error, "#{response['info']}"
-          else
-            id = response['app_id']
-            instances_path = "applications/#{id}/instances"
-            response = mozzn.get(instances_path,nil)
-            ip_address = response['instances'].first['data']['ip_address']
-            if options[:command].present?
-              system( "ssh app@#{ip_address} #{options[:command]}" )
-            else
-              system( "ssh app@#{ip_address}")
-            end
-            status = $?.exitstatus
-          end
-        rescue JSON::ParserError => e
-          raise Thor::Error,"You do not have an application with the name #{params[:name]}. Please check the application name."
-        end
-      rescue Mozzn::Disconnected
-        say 'Unable to connect to Mozzn. Check your internet connection!', :red
-      rescue Mozzn::UnexpectedOutput
-        say 'UnexpectedOutput', :red
-      end 
+      end
     end
   end
 end
