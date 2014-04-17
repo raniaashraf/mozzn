@@ -9,11 +9,11 @@ require "mozzn/commands/key"
 require "mozzn/commands/app"
 require "mozzn/commands/auth"
 
+trap(:INT) { puts 'Exiting...'; exit 1 }
+
 module Mozzn
   class Cli < Thor
     include Thor::Actions
-    
-    trap(:INT) { puts 'Exiting...'; exit 1 }
     
     default_task :help
 

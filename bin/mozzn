@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+trap(:INT) { puts 'Exiting...'; exit 1 }
+
 require 'mozzn'
 
 # Start our command line interface
