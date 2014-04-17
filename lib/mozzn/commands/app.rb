@@ -81,11 +81,11 @@ module Mozzn
       method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'resources', 'To list all instances which application use'
       def resources 
-        begin
-          mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-        rescue Mozzn::UnexpectedOutput => e
-          say 'You need to login in order to continue.', :red
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
         end
+        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options['appname'].present?
           name = options['appname']
         else
