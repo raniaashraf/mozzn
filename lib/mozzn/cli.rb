@@ -53,7 +53,7 @@ module Mozzn
     end
 
     class Key < Thor
-      desc 'add', 'Add your SSH Public Key directily or add its path'
+      desc 'add', 'Add your SSH Public Key directily or add its path.'
       method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
       method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
       def add
@@ -88,6 +88,16 @@ module Mozzn
         say 'Unable to connect to Mozzn check the internet connection!', :red
       rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
+      end
+
+      desc 'destroy', 'Delete specific SSH public Key.'
+      def destroy
+        
+      end
+
+      desc 'list', 'List all your SSH public keys.'
+      def list
+        
       end
     end
 
