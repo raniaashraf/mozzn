@@ -29,10 +29,13 @@ describe Mozzn::Commands::App do
   describe "mozzn resources" do
     describe "With valid params" do
       describe "With an existing App" do
-        it "returns No assigned resources for this application." do
+        it "returns No assigned resources for this application.", focused: true do
           capture(:stdout) { valid_user }
-          appname =  valid_app 
-          expect { @app.resources "#{appname}" }.to raise_error(Thor::Error, "No assigned resources for this application.")
+          name = valid_app
+          @app.options = {
+          appname: name
+          }
+          expect { @app.resources }.to raise_error(Thor::Error, "No assigned resources for this application.")
         end
       end
 
@@ -49,32 +52,20 @@ describe Mozzn::Commands::App do
       end
 
       describe "With an existing App having no datastores or components" do
-        it "returns No assigned resources for this application." do
+        it "returns No assigned resources for this application.", focused: true do
           capture(:stdout) { valid_user }
-          appname =  valid_app 
-          expect { @app.resources "#{appname}" }.to raise_error(Thor::Error, "No assigned resources for this application.")
-        
+          name = valid_app
+          @app.options = {
+          appname: name
+          }
+          expect { @app.resources }.to raise_error(Thor::Error, "No assigned resources for this application.") 
         end
       end
     end
     describe "With invalid parameters" do
-      describe "with not existing application" do
-        it "Rais error 'Application not found'" do
-          capture(:stdout) { valid_user }
-          appname = 'AppName'
-          expect { @app.resources "#{appname}" }.to raise_error(Thor::Error, "Application was not found")
-        end
-      end
-
       describe "with unauthorized user" do
         it "returns HTTP code 422" do
           pending
-        end
-      end
-
-      describe "without name" do
-        it "should return Application name must be provided." do 
-          expect { @app.resources }.to raise_error(Thor::Error, "You must enter Application Name!")
         end
       end
     end
