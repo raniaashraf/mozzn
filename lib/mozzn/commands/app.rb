@@ -75,11 +75,14 @@ module Mozzn
       #TODO  
       end
 
-      desc 'resources APPNAME', 'To list all instances which a specific application use'
-      def resources appname = nil
+      method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
+      desc 'resources', 'To list all instances which application use'
+      def resources 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-        if !appname.present?
-          raise Thor::Error, "You must enter Application Name!"
+        if options['appname'].present?
+          appname = options['appname']
+        else
+          appname = appname
         end
         params = {
           name: appname
@@ -180,24 +183,22 @@ module Mozzn
       rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end 
-    no_commands do
-      # desc 'git_check', 'checks if user has git installed in $PATH or not'
-      def appname
-        config_file_path = ".git/config"
-        if File.exists?(config_file_path)
-          File.open(config_file_path, "r") do |f|
-            @data = f.read
+      no_commands do
+        desc 'appname', 'Get application name'
+        def appname
+          config_file_path = ".git/config"
+          if File.exists?(config_file_path)
+            File.open(config_file_path, "r") do |f|
+              @data = f.read
+            end
+          else
+            raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
           end
-        else
-          raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
+          url = @data.scan /url =.*/
+          app = url.first.split(":")[1] 
+          appname = app.split('.').first
         end
-        url = @data.scan /url =.*/
-        app = url.first.split(":")[1] 
-        appname = app.split('.').first
       end
     end
   end
-end
-
-
 end
