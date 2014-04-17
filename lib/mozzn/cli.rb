@@ -53,10 +53,9 @@ module Mozzn
     end
 
     class Key < Thor
-      desc 'add_key', 'Add your SSH Public Key directily or add its path'
+      desc 'add', 'Add your SSH Public Key directily or add its path'
       method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
       method_option :key_path, :aliases => "-p", :desc => "Path to RSA/DSA public key"
-      # mozzn add_key
       def add
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options[:key_path].present?
