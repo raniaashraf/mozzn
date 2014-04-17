@@ -81,12 +81,11 @@ module Mozzn
       method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'resources', 'To list all instances which application use'
       def resources 
-        # begin
+        begin
           mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-          puts Mozzn::Config.new.read['token'] 
-        # rescue Mozzn::UnexpectedOutput => e
-        #   say 'You need to login in order to continue.', :red
-        # end
+        rescue Mozzn::UnexpectedOutput => e
+          say 'You need to login in order to continue.', :red
+        end
         if options['appname'].present?
           name = options['appname']
         else
@@ -154,8 +153,8 @@ module Mozzn
         end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn. Check your internet connection!', :red
-      # rescue Mozzn::UnexpectedOutput
-      #   say 'UnexpectedOutput', :red
+      rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
 
     desc 'console', 'To start a console on your first web server'
