@@ -80,13 +80,13 @@ module Mozzn
       def resources 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options['appname'].present?
-          appname = options['appname']
+          name = options['appname']
         else
-          appname = appname
-          puts appname
+          name = appname
+          puts name
         # end
         # params = {
-        #   name: appname
+        #   name: name
         # }
         # search_path = "applications/search"
         # begin
