@@ -41,11 +41,14 @@ module Mozzn
         say 'UnexpectedOutput', :red
       end
 
-      desc 'remove APPNAME', 'Remove spcicfic Application'
-      def remove name = nil
+      method_option :appname, :aliases => "-n", :desc => "Application name"
+      desc 'remove ', 'Remove spcicfic Application'
+      def remove 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
-        if !name.present?
-          raise Thor::Error, "You must enter Application Name!"
+        if options['appname'].present?
+          name = options['appname']
+        else
+          name = appname
         end
         params = {
           name: name
@@ -75,7 +78,7 @@ module Mozzn
       #TODO  
       end
 
-      method_option :public_key, :aliases => "-k", :desc => "RSA/DSA public key"
+      method_option :appname, :aliases => "-n", :desc => "Application name"
       desc 'resources', 'To list all instances which application use'
       def resources 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
