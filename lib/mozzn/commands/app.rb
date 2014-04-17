@@ -153,8 +153,8 @@ module Mozzn
         end
       rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn. Check your internet connection!', :red
-      # rescue Mozzn::UnexpectedOutput
-      #   say 'UnexpectedOutput', :red
+      rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
 
     desc 'console', 'To start a console on your first web server'
