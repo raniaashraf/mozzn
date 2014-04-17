@@ -42,8 +42,8 @@ module Mozzn
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
-      desc 'remove ', 'Remove spcicfic Application'
-      def remove 
+      desc 'destroy ', 'Remove spcicfic Application'
+      def destroy 
         mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
         if options['appname'].present?
           name = options['appname']
