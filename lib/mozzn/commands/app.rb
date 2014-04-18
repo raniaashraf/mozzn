@@ -23,7 +23,7 @@ module Mozzn
         }
         response = mozzn.post(path, params)
         if response.has_key?('message')
-          raise Thor::Error, "#{response['message']}"
+          raise Thor::Error, "#{response['message']}."
         else
           say response['info'], :green
           git = Git.init
@@ -38,7 +38,7 @@ module Mozzn
           begin
             git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
           rescue Git::GitExecuteError => e
-            say 'Git remote already configured, skipping...'
+            say 'Git remote already configured, skipping.'
           end
         end
       rescue Mozzn::Disconnected
@@ -67,7 +67,7 @@ module Mozzn
         begin
         response = mozzn.get(search_path, params)
         if response.has_key?('info')
-          raise Thor::Error, "#{response['info']}"
+          raise Thor::Error, "#{response['info']}."
         else
           id = response['app_id']
           resources_path = "applications/#{id}/remove"
@@ -82,7 +82,7 @@ module Mozzn
         rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end
-      desc "list", "List all your Applications."
+      desc "list", "List all your Applications"
 
       def list
       #TODO  
@@ -212,11 +212,11 @@ module Mozzn
           end
           config = ParseConfig.new(config_file_path)
           our_key = 'remote "mozzn"'
-          unless config.has_key?(our_key)
+          unless config.get_groups.include?(our_key)
             raise Thor::Error,"Unable to find a Git repository for this directory. You are probably not in the application directory or this application does not have a Git repository yet."
           end
           url = config['remote "mozzn"']['url']
-          appname = url.split(':').split('.').first
+          appname = url.split(':').last.split('.').first
         end
       end
     end
