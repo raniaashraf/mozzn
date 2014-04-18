@@ -1,3 +1,5 @@
+require 'parseconfig'
+
 module Mozzn
   module Commands
     class App < Thor
@@ -205,16 +207,16 @@ module Mozzn
         desc 'appname', 'Get application name'
         def appname
           config_file_path = ".git/config"
-          if File.exists?(config_file_path)
-            File.open(config_file_path, "r") do |f|
-              @data = f.read
-            end
-          else
-            raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
+          unless File.exists?(config_file_path)
+            raise Thor::Error,"Unable to find a Git repository for this directory. You are probably not in the application directory or this application does not have a Git repository yet."
           end
-          url = @data.scan /url =.*/
-          app = url.first.split(":")[1] 
-          appname = app.split('.').first
+          config = ParseConfig.new(config_file_path)
+          our_key = 'remote "mozzn"'
+          unless config.has_key?(our_key)
+            raise Thor::Error,"Unable to find a Git repository for this directory. You are probably not in the application directory or this application does not have a Git repository yet."
+          end
+          url = config['remote "mozzn"']['url']
+          appname = url.split(':').split('.').first
         end
       end
     end
