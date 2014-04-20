@@ -18,7 +18,7 @@ module Mozzn
 
     def get path, parms
       begin
-        response = @connection.get uri(path), parms
+        response = @connection.get uri(path)
       rescue Faraday::Error::ConnectionFailed => e
         raise Mozzn::Disconnected
       end
