@@ -104,7 +104,7 @@ module Mozzn
         #     t.add_row [key, value]  
         #   end
         # end
-        say response['applications']
+        say response['applications'].first['name']
 
       end
 
