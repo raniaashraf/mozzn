@@ -56,24 +56,24 @@ module Mozzn
         mozzn = Mozzn::Api.new(token)
         path = "keys"
         response = mozzn.get(path, nil)
-        say response['keys'].first['name']
-        # if response.has_key? ('info')
-        #   say response['info'], :yellow
-        #   return
-        # end
-        # table = Terminal::Table.new(headings: ['ID', 'Name']) do |t|
-        #   response['keys'].each do |key|
-        #     key = key['id']
-        #     value = key['name']
-        #     t.add_row [key, value]  
-        #   end
-        # end
-        # say "Your SSH keys are:"
-        # say table
-        # rescue Mozzn::Disconnected
-        # say 'Unable to connect to Mozzn. Check your internet connection!', :red
-        # rescue Mozzn::UnexpectedOutput
-        # say 'UnexpectedOutput', :red
+        # say response['keys'].first['name']
+        if response.has_key? ('info')
+          say response['info'], :yellow
+          return
+        end
+        table = Terminal::Table.new(headings: ['ID', 'Name']) do |t|
+          response['keys'].each do |k|
+            key = k['id']
+            value = k['name']
+            t.add_row [key, value]  
+          end
+        end
+        say "Your SSH keys are:"
+        say table
+        rescue Mozzn::Disconnected
+        say 'Unable to connect to Mozzn. Check your internet connection!', :red
+        rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
     end
   end
