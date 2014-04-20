@@ -92,8 +92,12 @@ module Mozzn
         end
         mozzn = Mozzn::Api.new(token)
         path = "applications"
-        response = mozzn.get(path, nil) 
-        say response, :green
+        response = mozzn.get(path, nil)
+        if response.has_key? ('message')
+          say response['message'], :yellow
+          return
+        end
+        say response, :yellow
 
       end
 
