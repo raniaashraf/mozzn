@@ -56,17 +56,18 @@ module Mozzn
         mozzn = Mozzn::Api.new(token)
         path = "keys"
         response = mozzn.get(path, nil)
-        if response.has_key? ('info')
-          say response['info'], :yellow
-          return
-        end
-        table = Terminal::Table.new(headings: ['ID', 'Name']) do |t|
-          response['keys'].each do |key|
-            key = key['id']
-            value = key['name']
-            t.add_row [key, value]  
-          end
-        end
+        say response['keys']
+        # if response.has_key? ('info')
+        #   say response['info'], :yellow
+        #   return
+        # end
+        # table = Terminal::Table.new(headings: ['ID', 'Name']) do |t|
+        #   response['keys'].each do |key|
+        #     key = key['id']
+        #     value = key['name']
+        #     t.add_row [key, value]  
+        #   end
+        # end
         say "Your SSH keys are:"
         say table
         rescue Mozzn::Disconnected
