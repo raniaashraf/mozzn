@@ -58,4 +58,25 @@ describe Mozzn::Commands::App do
       end
     end
   end
+
+  describe "mozzn app list" do
+    describe "With valid params" do
+      describe "With an existing Apps" do
+        it "returns Your applications are:" do
+          capture(:stdout) { valid_user }
+          valid_app 
+          output = capture(:stdout) { @app.list }
+          expect(output).to be =~ /Your applications are:/  
+        end
+      end
+
+      describe "With no existing Apps" do
+        it "returns You dont have any applications." do
+          capture(:stdout) { valid_user2 } 
+          output = capture(:stdout) { @app.list }
+          expect(output).to be =~ /You dont have any applications./ 
+        end
+      end
+    end
+  end
 end

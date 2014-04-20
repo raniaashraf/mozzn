@@ -46,6 +46,15 @@ def valid_user
     auth.login  
 end
 
+def valid_user2
+  auth = Mozzn::Commands::Auth.new
+    auth.options = {
+      email:'test2@mozzn.com',
+      password: '12345678'
+    } 
+    auth.login  
+end
+
 def valid_app
   app = Mozzn::Commands::App.new
   app_name = unique_name
