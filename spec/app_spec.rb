@@ -14,9 +14,9 @@ describe Mozzn::Commands::App do
       end
     end
     describe "with invalid params" do
-      it "returns creating faild ", focused: true do
+      it "returns creating faild " do
         capture(:stdout) { valid_user }
-        expect { @app.create "'App name'" }.to raise_error(Thor::Error, "creating faild")
+        expect { @app.create "'App name'" }.to raise_error(Thor::Error, "creating faild.")
       end
     end
 

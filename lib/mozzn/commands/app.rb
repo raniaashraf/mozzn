@@ -90,11 +90,8 @@ module Mozzn
           raise Thor::Error,"You need to login in order to continue."
         end
         mozzn = Mozzn::Api.new(token)
-        begin
-          
-        rescue Exception => e
-          
-        end
+        response = mozzn.get(path, nil) 
+        say response, :green
 
       end
 
