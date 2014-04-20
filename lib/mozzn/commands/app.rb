@@ -1,3 +1,5 @@
+require 'parseconfig'
+
 module Mozzn
   module Commands
     class App < Thor
@@ -21,7 +23,7 @@ module Mozzn
         }
         response = mozzn.post(path, params)
         if response.has_key?('message')
-          raise Thor::Error, "#{response['message']}"
+          raise Thor::Error, "#{response['message']}."
         else
           say response['info'], :green
           git = Git.init
@@ -36,7 +38,7 @@ module Mozzn
           begin
             git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
           rescue Git::GitExecuteError => e
-            say 'Git remote already configured, skipping...'
+            say 'Git remote already configured, skipping.'
           end
         end
       rescue Mozzn::Disconnected
@@ -65,7 +67,7 @@ module Mozzn
         begin
         response = mozzn.get(search_path, params)
         if response.has_key?('info')
-          raise Thor::Error, "#{response['info']}"
+          raise Thor::Error, "#{response['info']}."
         else
           id = response['app_id']
           resources_path = "applications/#{id}/remove"
@@ -80,7 +82,7 @@ module Mozzn
         rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end
-      desc "list", "List all your Applications."
+      desc "list", "List all your Applications"
 
       def list
         token = Mozzn::Config.new.read['token']
@@ -215,16 +217,16 @@ module Mozzn
         desc 'appname', 'Get application name'
         def appname
           config_file_path = ".git/config"
-          if File.exists?(config_file_path)
-            File.open(config_file_path, "r") do |f|
-              @data = f.read
-            end
-          else
-            raise Thor::Error,"Unable to find a repository for this directory. You probably not in the application directory or this application does not have git repository yet."
+          unless File.exists?(config_file_path)
+            raise Thor::Error,"Unable to find a Git repository for this directory. You are probably not in the application directory or this application does not have a Git repository yet."
           end
-          url = @data.scan /url =.*/
-          app = url.first.split(":")[1] 
-          appname = app.split('.').first
+          config = ParseConfig.new(config_file_path)
+          our_key = 'remote "mozzn"'
+          unless config.get_groups.include?(our_key)
+            raise Thor::Error,"Unable to find a Git repository for this directory. You are probably not in the application directory or this application does not have a Git repository yet."
+          end
+          url = config['remote "mozzn"']['url']
+          appname = url.split(':').last.split('.').first
         end
       end
     end
