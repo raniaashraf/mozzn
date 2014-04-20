@@ -97,14 +97,14 @@ module Mozzn
           say response['message'], :yellow
           return
         end
-        # table = Terminal::Table.new(headings: ['Name', 'Status']) do |t|
-        #   response['applications'].each do |app|
-        #     key = app.name
-        #     value = app.status
-        #     t.add_row [key, value]  
-        #   end
+        table = Terminal::Table.new(headings: ['Name', 'Status']) do |t|
+          response['applications'].each do |app|
+            key = app['name']
+            value = app['status']
+            t.add_row [key, value]  
+          end
         # end
-        say response['applications'].first['name']
+        say table
 
       end
 
