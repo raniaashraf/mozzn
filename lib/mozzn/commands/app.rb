@@ -103,7 +103,7 @@ module Mozzn
             value = app['status']
             t.add_row [key, value]  
           end
-        # end
+        end
         say table
 
       end
