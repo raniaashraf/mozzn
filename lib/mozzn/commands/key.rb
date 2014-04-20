@@ -48,6 +48,7 @@ module Mozzn
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
+        mozzn = Mozzn::Api.new(token)
         params = {
           name: name
         }
