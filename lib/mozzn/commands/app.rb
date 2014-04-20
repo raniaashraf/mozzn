@@ -90,7 +90,7 @@ module Mozzn
           raise Thor::Error,"You need to login in order to continue."
         end
         mozzn = Mozzn::Api.new(token)
-        search_path = "applications"
+        path = "applications"
         response = mozzn.get(path, nil) 
         say response, :green
 
