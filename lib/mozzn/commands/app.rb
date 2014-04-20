@@ -7,44 +7,48 @@ module Mozzn
       desc 'create APPNAME', 'create a new application'
 
       def create name = nil
-        token = Mozzn::Config.new.read['token']
-        if token.nil?
-          raise Thor::Error,"You need to login in order to continue."
-        end
-        mozzn = Mozzn::Api.new(token)
-        if name == nil
-          raise Thor::Error, "You must enter application name."
-        end
-        path = 'applications'
-        params = {
-          application: {
-            name: name
+        if File.exist?(File.expand_path("~/.mozznrc"))
+          token = Mozzn::Config.new.read['token']
+          if token.nil?
+            raise Thor::Error,"You need to login in order to continue."
+          end
+          mozzn = Mozzn::Api.new(token)
+          if name == nil
+            raise Thor::Error, "You must enter application name."
+          end
+          path = 'applications'
+          params = {
+            application: {
+              name: name
+            }
           }
-        }
-        response = mozzn.post(path, params)
-        if response.has_key?('message')
-          raise Thor::Error, "#{response['message']}."
-        else
-          say response['info'], :green
-          git = Git.init
-          unless File.exist?('.git')
-              git.add(all: true)
+          response = mozzn.post(path, params)
+          if response.has_key?('message')
+            raise Thor::Error, "#{response['message']}."
+          else
+            say response['info'], :green
+            git = Git.init
+            unless File.exist?('.git')
+                git.add(all: true)
+              begin
+                git.commit('First commit')
+              rescue Git::GitExecuteError => e
+                # Do nothing
+              end
+            end
             begin
-              git.commit('First commit')
+              git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
             rescue Git::GitExecuteError => e
-              # Do nothing
+              say 'Git remote already configured, skipping.'
             end
           end
-          begin
-            git.add_remote("mozzn", "git@git.mozzn.com:#{name}.git")
-          rescue Git::GitExecuteError => e
-            say 'Git remote already configured, skipping.'
-          end
+        else
+          raise Thor::Error,"You need to login in order to continue."
         end
-      # rescue Mozzn::Disconnected
-      #   say 'Unable to connect to Mozzn check the internet connection!', :red
-      # rescue Mozzn::UnexpectedOutput
-      #   say 'UnexpectedOutput', :red
+      rescue Mozzn::Disconnected
+        say 'Unable to connect to Mozzn check the internet connection!', :red
+      rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
