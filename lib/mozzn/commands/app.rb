@@ -82,14 +82,15 @@ module Mozzn
         rescue Mozzn::UnexpectedOutput
         say 'UnexpectedOutput', :red
       end
-      desc "list", "List all your Applications"
 
+      desc "list", "List all your Applications"
       def list
         token = Mozzn::Config.new.read['token']
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
         mozzn = Mozzn::Api.new(token)
+        search_path = "applications"
         response = mozzn.get(path, nil) 
         say response, :green
 
