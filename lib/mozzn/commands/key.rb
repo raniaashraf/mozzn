@@ -43,8 +43,36 @@ module Mozzn
       end
 
       desc 'destroy', 'Delete specific SSH public Key.'
-      def destroy
-        # TODO
+      def destroy name=nil
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
+        end
+        params = {
+          name: name
+        }
+        search_path = "keys/search"
+        begin
+        response = mozzn.get(search_path, params)
+        if response.has_key?('info')
+          raise Thor::Error, "#{response['info']}."
+        else
+          id = response['key_id']
+          resources_path = "keys/#{id}/remove"
+          response = mozzn.get(resources_path,nil)
+          if response.has_key?('message')
+            raise Thor::Error,response['message']
+          else
+            say response['info'], :green
+          end
+        end  
+        rescue JSON::ParserError => e
+          raise Thor::Error,"You do not have an application with the name #{params[:name]}. Please check the application name."
+        end
+        rescue Mozzn::Disconnected
+        say 'Unable to connect to Mozzn. Check your internet connection!', :red
+        rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red
       end
 
       desc 'list', 'List all your SSH public keys.'
