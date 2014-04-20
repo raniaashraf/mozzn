@@ -103,6 +103,7 @@ module Mozzn
             t.add_row [key, value]  
           end
         end
+        say "Your applications are:"
         say table
         rescue Mozzn::Disconnected
         say 'Unable to connect to Mozzn. Check your internet connection!', :red
