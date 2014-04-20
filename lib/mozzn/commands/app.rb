@@ -86,7 +86,7 @@ module Mozzn
       desc "list", "List all your Applications"
       def list
         token = Mozzn::Config.new.read['token']
-        say token.inspec, :green
+        say token.inspect, :green
         # if token.nil?
         #   raise Thor::Error,"You need to login in order to continue."
         # end
