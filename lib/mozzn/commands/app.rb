@@ -86,13 +86,14 @@ module Mozzn
       desc "list", "List all your Applications"
       def list
         token = Mozzn::Config.new.read['token']
-        if token.nil?
-          raise Thor::Error,"You need to login in order to continue."
-        end
-        mozzn = Mozzn::Api.new(token)
-        path = "applications"
-        response = mozzn.get(path, nil) 
-        say response, :green
+        say token.inspec, :green
+        # if token.nil?
+        #   raise Thor::Error,"You need to login in order to continue."
+        # end
+        # mozzn = Mozzn::Api.new(token)
+        # path = "applications"
+        # response = mozzn.get(path, nil) 
+        # say response, :green
 
       end
 
