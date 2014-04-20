@@ -56,7 +56,7 @@ module Mozzn
         mozzn = Mozzn::Api.new(token)
         path = "keys"
         response = mozzn.get(path, nil)
-        say response['keys'].first
+        say response['keys'].first['id']
         # if response.has_key? ('info')
         #   say response['info'], :yellow
         #   return
