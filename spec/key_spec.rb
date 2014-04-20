@@ -49,4 +49,24 @@ describe Mozzn::Commands::Key do
       end
     end
   end
+
+  describe "mozzn key list" do
+    describe "With valid params" do
+      describe "With an existing keys" do
+        it "returns Your keys are:" do
+          capture(:stdout) { valid_user }
+          output = capture(:stdout) { @key.list }
+          expect(output).to be =~ /Your SSH keys are:/  
+        end
+      end
+
+      describe "With no existing Apps" do
+        it "returns You don't have any SSH key yet." do
+          capture(:stdout) { valid_user2 } 
+          output = capture(:stdout) { @key.list }
+          expect(output).to be =~ /You don't have any SSH key yet./ 
+        end
+      end
+    end
+  end
 end
