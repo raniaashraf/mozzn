@@ -9,7 +9,7 @@ module Mozzn
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        mozzn = Mozzn::Api.new(token)
         if options[:key_path].present?
           key_path = File.expand_path(options[:key_path])
         elsif options[:public_key].present?

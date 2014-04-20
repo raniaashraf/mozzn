@@ -9,7 +9,7 @@ module Mozzn
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        mozzn = Mozzn::Api.new(token)
         if name == nil
           raise Thor::Error, "You must enter application name."
         end
@@ -52,7 +52,7 @@ module Mozzn
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        mozzn = Mozzn::Api.new(token)
         if options['appname'].present?
           name = options['appname']
         else
@@ -83,7 +83,17 @@ module Mozzn
       desc "list", "List all your Applications."
 
       def list
-      #TODO  
+        token = Mozzn::Config.new.read['token']
+        if token.nil?
+          raise Thor::Error,"You need to login in order to continue."
+        end
+        mozzn = Mozzn::Api.new(token)
+        begin
+          
+        rescue Exception => e
+          
+        end
+
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
@@ -93,7 +103,7 @@ module Mozzn
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
-        mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+        mozzn = Mozzn::Api.new(token)
         if options['appname'].present?
           name = options['appname']
         else
@@ -172,7 +182,7 @@ module Mozzn
       if token.nil?
         raise Thor::Error,"You need to login in order to continue."
       end
-      mozzn = Mozzn::Api.new(Mozzn::Config.new.read['token'])
+      mozzn = Mozzn::Api.new(token)
       params = {
         name: appname
       }

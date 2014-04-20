@@ -11,34 +11,34 @@ Run the following command from your terminal:
 
 
 Commands:
-  - mozzn add_key             
-  - mozzn create_app APPNAME  
-  - mozzn help COMMAND        
-  - mozzn login               
-  - mozzn remove_app APPNAME  
-  - mozzn update              
+  - mozzn app SUBCOMMAND   
+  - mozzn auth SUBCOMMAND  
+  - mozzn help COMMAND     
+  - mozzn key SUBCOMMAND   
+  - mozzn update           
 
 Detailed command usage: 
 
-    $ mozzn add_key
+    $ mozzn app
 
 
-
-####mozzn add_key
-
-#####Options:
-  -k, [--public-key=PUBLIC_KEY]  
-  -p, [--key-path=KEY_PATH]      
-
-Add your SSH Public Key directily or add its path
-
-    $ mozzn create_app
+Commands:
+####mozzn app console         
+####mozzn app create APPNAME  
+####mozzn app destroy         
+####mozzn app help [COMMAND]  
+####mozzn app list            
+####mozzn app resources       
 
 
+    $ mozzn auth
 
-####mozzn create_app APPNAME
 
-create a new application
+Commands:
+####mozzn auth help [COMMAND]  
+####mozzn auth login           
+####mozzn auth register        
+
 
     $ mozzn help
 
@@ -48,25 +48,15 @@ create a new application
 
 For more infromation about spicific COMMAND
 
-    $ mozzn login
+    $ mozzn key
 
 
+Commands:
+####mozzn key add             
+####mozzn key destroy         
+####mozzn key help [COMMAND]  
+####mozzn key list            
 
-####mozzn login
-
-#####Options:
-  -u, [--email=EMAIL]        
-  -p, [--password=PASSWORD]  
-
-Login with your mozzn credentials, an interactive shell will ask you about your email and password
-
-    $ mozzn remove_app
-
-
-
-####mozzn remove_app APPNAME
-
-Remove spcicfic Application.
 
     $ mozzn update
 
@@ -74,7 +64,7 @@ Remove spcicfic Application.
 
 ####mozzn update
 
-To show if there is an update for the CLI
+Check for updates
 
 ## Contributing
 1. Fork it ( http://github.com/mozzn/mozzn/fork )
