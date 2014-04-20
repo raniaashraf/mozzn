@@ -69,4 +69,18 @@ describe Mozzn::Commands::Key do
       end
     end
   end
+
+  describe "mozzn key destroy" do
+    describe "with valid params" do
+      it " returns Key deleted." do
+        pending
+      end
+    end
+
+    describe "with invalid params" do
+      it " returns Key did not deleted." do
+        pending
+      end
+    end
+  end
 end
