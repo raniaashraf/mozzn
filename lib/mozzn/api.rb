@@ -11,7 +11,7 @@ module Mozzn
       if ENV['GEM_ENV'] == 'test'
         @connection = Faraday.new('http://localhost:3000/api/v1/')
       else
-        @connection = Faraday.new('http://localhost:3000/api/v1/')
+        @connection = Faraday.new('http://mozzn.com/api/v1/')
       end
       @token = token
     end
@@ -22,11 +22,11 @@ module Mozzn
       rescue Faraday::Error::ConnectionFailed => e
         raise Mozzn::Disconnected
       end
-      # begin
+      begin
         JSON.parse(response.body)
-      # rescue JSON::ParserError => e
-      #   raise Mozzn::UnexpectedOutput
-      # end
+      rescue JSON::ParserError => e
+        raise Mozzn::UnexpectedOutput
+      end
       
     end
 
