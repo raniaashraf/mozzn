@@ -56,7 +56,7 @@ module Mozzn
         mozzn = Mozzn::Api.new(token)
         path = "keys"
         response = mozzn.get(path, nil)
-        say response['keys']
+        say response['keys'].first
         # if response.has_key? ('info')
         #   say response['info'], :yellow
         #   return
@@ -68,12 +68,12 @@ module Mozzn
         #     t.add_row [key, value]  
         #   end
         # end
-        say "Your SSH keys are:"
-        say table
-        rescue Mozzn::Disconnected
-        say 'Unable to connect to Mozzn. Check your internet connection!', :red
-        rescue Mozzn::UnexpectedOutput
-        say 'UnexpectedOutput', :red
+        # say "Your SSH keys are:"
+        # say table
+        # rescue Mozzn::Disconnected
+        # say 'Unable to connect to Mozzn. Check your internet connection!', :red
+        # rescue Mozzn::UnexpectedOutput
+        # say 'UnexpectedOutput', :red
       end
     end
   end
