@@ -86,7 +86,6 @@ module Mozzn
       desc "list", "List all your Applications"
       def list
         token = Mozzn::Config.new.read['token']
-        # say token.inspect, :green
         if token.nil?
           raise Thor::Error,"You need to login in order to continue."
         end
@@ -105,7 +104,10 @@ module Mozzn
           end
         end
         say table
-
+        rescue Mozzn::Disconnected
+        say 'Unable to connect to Mozzn. Check your internet connection!', :red
+        rescue Mozzn::UnexpectedOutput
+        say 'UnexpectedOutput', :red  
       end
 
       method_option :appname, :aliases => "-n", :desc => "Application name"
