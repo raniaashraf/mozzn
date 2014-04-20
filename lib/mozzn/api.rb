@@ -22,11 +22,11 @@ module Mozzn
       rescue Faraday::Error::ConnectionFailed => e
         raise Mozzn::Disconnected
       end
-      begin
+      # begin
         JSON.parse(response.body)
-      rescue JSON::ParserError => e
-        raise Mozzn::UnexpectedOutput
-      end
+      # rescue JSON::ParserError => e
+      #   raise Mozzn::UnexpectedOutput
+      # end
       
     end
 
